@@ -35,8 +35,11 @@ DROP TABLE IF EXISTS `cart`;
 CREATE TABLE `cart` (
   `id` int(45) NOT NULL AUTO_INCREMENT,
   `username` varchar(100) DEFAULT NULL,
+  `firstname` varchar(100) DEFAULT NULL,
+  `lastname` varchar(100) DEFAULT NULL,
   `address` text,
   `contactno` varchar(100) DEFAULT NULL,
+  `email` varchar(100) DEFAULT NULL,
   `trans_code` varchar(100) DEFAULT NULL,
   `code` varchar(100) DEFAULT NULL,
   `quantity` int(11) DEFAULT NULL,
