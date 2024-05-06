@@ -115,5 +115,19 @@
             }
             redirect(base_url().'manage_product');
         }
+        public function save_product_image(){
+            $save=$this->Ordering_model->save_product_image();
+            if($save){
+                $this->session->set_flashdata('success','Product image successfully saved!');
+            }else{
+                $this->session->set_flashdata('failed','Unable to save product image!');
+            }
+            redirect(base_url().'manage_product');
+        }
+        public function view_product_image($id){
+            $page="product_image";
+            $data['image'] = $this->Ordering_model->getSingleProduct($id);
+            $this->load->view('pages/admin/'.$page,$data);
+        }
     }
 ?>

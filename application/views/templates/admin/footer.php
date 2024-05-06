@@ -60,6 +60,10 @@
             var id=$(this).data('id');
             document.getElementById('quantity_id').value = id;
         });
+        $('.addProductImage').click(function(){
+            var id=$(this).data('id');
+            document.getElementById('image_id').value = id;            
+        });
     </script>
 </body>
 

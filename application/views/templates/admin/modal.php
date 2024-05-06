@@ -100,3 +100,31 @@
         <?=form_close();?>
     </div>
 </div>
+
+<div class="modal fade" id="manageProductImage" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <?=form_open_multipart(base_url()."save_product_image");?>
+            <input type="hidden" name="id" id="image_id">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Add Product Image</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">                            
+                <div class="form-group row">
+                    <label for="fname" class="col-sm-2 control-label col-form-label">Image</label>
+                    <div class="col-sm-10">
+                        <input type="file" class="form-control" name="file" required>
+                    </div>
+                </div>                
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button type="submit" class="btn btn-primary">Submit</button>
+            </div>            
+        </div>
+        <?=form_close();?>
+    </div>
+</div>

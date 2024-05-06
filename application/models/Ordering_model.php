@@ -31,10 +31,10 @@
                 $result=$this->db->query("INSERT INTO stocks(code,`description`,prodtype,unitcost,sellingprice,`status`,datearray,timearray) VALUES('$code','$description','$prodtype','$unitcost','$sellingprice','$status','$datearray','$timearray')");                
                 if($result){
                     $result1=$this->db->query("INSERT INTO stocktable(code,unitcost,quantity,trantype,datearray,timearray) VALUES('$code','$sellingprice','1','add','$datearray','$timearray')");
-                    if($result1){
-                        $this->db->query("DELETE FROM stocks WHERE code='$code'");
+                    if($result1){                       
                         return true;
                     }else{
+                        $this->db->query("DELETE FROM stocks WHERE code='$code'");
                         return false;
                     }
                 }else{
@@ -83,6 +83,28 @@
             }else{
                 return false;
             }
+        }
+        public function save_product_image(){
+            $id=$this->input->post('id');
+            $fileName=basename($_FILES["file"]["name"]);
+            $fileType=pathinfo($fileName, PATHINFO_EXTENSION);
+            $allowTypes = array('jpg','png','jpeg','gif');
+            if(in_array($fileType,$allowTypes)){
+                $image = $_FILES["file"]["tmp_name"];
+                $imgContent=addslashes(file_get_contents($image));
+                $result=$this->db->query("UPDATE stocks SET `img`='$imgContent' WHERE id='$id'");            
+            }else{
+                return false;
+            }            
+            if($result){
+                return true;
+            }else{
+                return false;
+            }
+        }
+        public function getSingleProduct($id){
+            $result=$this->db->query("SELECT * FROM stocks WHERE `id`='$id'");
+            return $result->row_array();
         }
     }
 ?>

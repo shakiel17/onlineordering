@@ -65,9 +65,14 @@
                                             foreach($products as $item){
                                                 $qty=$this->Ordering_model->getQuantity($item['code']);
                                                 $quantity=$qty['quantity'];
+                                                if($item['img']==""){
+                                                    $image="<a href='#' data-toggle='modal' data-target='#manageProductImage' data-id='$item[id]' class='addProductImage'>Add Image</a>";
+                                                }else{
+                                                    $image="<a href='#' data-toggle='modal' data-target='#manageProductImage' data-id='$item[id]' class='addProductImage'><img src='data:image/jpg;charset=utf8;base64,".base64_encode($item['img'])."' width='70'></a><br><a href='".base_url()."view_product_image/$item[id]' target='_blank'>View Image</a>";
+                                                }
                                                 echo "<tr>";
                                                     echo "<td>$x.</td>";
-                                                    echo "<td></td>";
+                                                    echo "<td align='center'>$image</td>";
                                                     echo "<td>$item[description]</td>";
                                                     echo "<td>$item[prodtype]</td>";
                                                     echo "<td align='right'>".number_format($item['unitcost'],2)."</td>";
