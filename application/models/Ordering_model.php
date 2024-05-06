@@ -106,5 +106,9 @@
             $result=$this->db->query("SELECT * FROM stocks WHERE `id`='$id'");
             return $result->row_array();
         }
+        public function getAllOrders(){
+            $result=$this->db->query("SELECT *,COUNT(code) as no_of_items FROM cart WHERE trans_code <> '' GROUP BY username,trans_code ORDER BY datearray DESC");
+            return $result->result_array();
+        }
     }
 ?>

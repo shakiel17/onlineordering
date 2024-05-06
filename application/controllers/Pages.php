@@ -8,11 +8,11 @@
             if(!file_exists(APPPATH.'views/pages/'.$page.".php")){
                 show_404();
             }
-        
+            $data['title'] = "Store Items";
             $this->load->view('templates/header');
             $this->load->view('templates/user/navbar');
             $this->load->view('templates/user/sidebar');
-            $this->load->view('pages/'.$page);    
+            $this->load->view('pages/'.$page,$data);    
             $this->load->view('templates/user/modal');        
             $this->load->view('templates/user/footer');
         }
@@ -128,6 +128,26 @@
             $page="product_image";
             $data['image'] = $this->Ordering_model->getSingleProduct($id);
             $this->load->view('pages/admin/'.$page,$data);
+        }
+        public function manage_order(){
+            $page = "manage_order";
+            if(!file_exists(APPPATH.'views/pages/admin/'.$page.".php")){
+                show_404();
+            }
+
+            if($this->session->admin_login){
+
+            }else{
+                $this->session->set_flashdata('failed','You are not logged in! Please login.');
+                redirect(base_url()."admin");
+            }
+            $data['orders'] = $this->Ordering_model->getAllOrders();
+            $this->load->view('templates/header');
+            $this->load->view('templates/admin/navbar');
+            $this->load->view('templates/admin/sidebar');
+            $this->load->view('pages/admin/'.$page,$data);    
+            $this->load->view('templates/admin/modal');        
+            $this->load->view('templates/admin/footer');
         }
     }
 ?>
