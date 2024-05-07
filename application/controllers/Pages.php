@@ -9,9 +9,10 @@
                 show_404();
             }
             $data['title'] = "Store Items";
+            $data['category'] = $this->Ordering_model->getAllProductsByCategory();
             $this->load->view('templates/header');
             $this->load->view('templates/user/navbar');
-            $this->load->view('templates/user/sidebar');
+            $this->load->view('templates/user/sidebar',$data);
             $this->load->view('pages/'.$page,$data);    
             $this->load->view('templates/user/modal');        
             $this->load->view('templates/user/footer');
