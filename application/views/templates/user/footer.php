@@ -30,6 +30,12 @@
     <script src="<?=base_url();?>design/assets/libs/fullcalendar/dist/fullcalendar.min.js"></script>
     <script src="<?=base_url();?>design/dist/js/pages/calendar/cal-init.js"></script>
 
+    <script>
+        $('.addtocart').click(function(){
+            var id=$(this).data('id');
+            document.getElementById('cart_id').value = id;
+        });
+    </script>
 </body>
 
 </html>
