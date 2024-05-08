@@ -26,7 +26,7 @@ CREATE TABLE `admin` (
   `password` varchar(100) DEFAULT NULL,
   `fullname` varchar(100) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
 
 /*Table structure for table `cart` */
 
@@ -65,7 +65,7 @@ CREATE TABLE `customer` (
   `datearray` date DEFAULT NULL,
   `timearray` time DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
 
 /*Table structure for table `stocks` */
 
@@ -81,8 +81,10 @@ CREATE TABLE `stocks` (
   `status` varchar(100) DEFAULT NULL,
   `datearray` date DEFAULT NULL,
   `timearray` time DEFAULT NULL,
+  `img` longblob,
+  `critical_level` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=latin1;
 
 /*Table structure for table `stocktable` */
 
@@ -98,7 +100,7 @@ CREATE TABLE `stocktable` (
   `datearray` date DEFAULT NULL,
   `timearray` time DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=latin1;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
 /*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
