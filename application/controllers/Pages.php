@@ -3,6 +3,7 @@
     ini_set('memory_limit','2048M');
     date_default_timezone_set('Asia/Manila');
     class Pages extends CI_Controller{
+        //======================User Module===============================
         public function index(){
             $page = "index";
             if(!file_exists(APPPATH.'views/pages/'.$page.".php")){
@@ -10,6 +11,7 @@
             }
             $data['title'] = "Store Items";
             $data['category'] = $this->Ordering_model->getAllProductsByCategory();
+            $data['search_result'] = array();            
             $this->load->view('templates/header');
             $this->load->view('templates/user/navbar');
             $this->load->view('templates/user/sidebar',$data);
@@ -17,7 +19,90 @@
             $this->load->view('templates/user/modal');        
             $this->load->view('templates/user/footer');
         }
+        public function view_product_category($category){
+            $category=str_replace('%20',' ',$category);
+            $page = "index";
+            if(!file_exists(APPPATH.'views/pages/'.$page.".php")){
+                show_404();
+            }
+            $data['title'] = $category;
+            $data['category'] = $this->Ordering_model->getAllProductsByCategory();
+            $data['search_result'] = $this->Ordering_model->getProductByCategory($category);            
+            $this->load->view('templates/header');
+            $this->load->view('templates/user/navbar');
+            $this->load->view('templates/user/sidebar',$data);
+            $this->load->view('pages/'.$page,$data);    
+            $this->load->view('templates/user/modal');        
+            $this->load->view('templates/user/footer');
+        }
+        public function view_product_details($id){            
+            $page = "product_details";
+            if(!file_exists(APPPATH.'views/pages/'.$page.".php")){
+                show_404();
+            }
+            if($this->session->user_login){
 
+            }else{
+                redirect(base_url()."user_login");
+            }
+            $data['title'] = "Product Details";
+            $data['category'] = $this->Ordering_model->getAllProductsByCategory();
+            $data['details'] = $this->Ordering_model->getSingleProduct($id);
+            $this->load->view('templates/header');
+            $this->load->view('templates/user/navbar');
+            $this->load->view('templates/user/sidebar',$data);
+            $this->load->view('pages/'.$page,$data);    
+            $this->load->view('templates/user/modal');        
+            $this->load->view('templates/user/footer');
+        }
+        public function user_login(){
+            $page = "user_login";
+            if(!file_exists(APPPATH.'views/pages/'.$page.".php")){
+                show_404();
+            }           
+            $this->load->view('pages/'.$page);                
+        }
+        public function user_authentication(){
+            $data=$this->Ordering_model->user_authentication();
+            if($data){
+                $user_data=array(
+                    'username' => $data['username'],
+                    'fullname' => $data['fullname'],                    
+                    'contactno' => $data['contactno'],
+                    'user_login' => true
+                );
+                $this->session->set_userdata($user_data);
+                redirect(base_url());
+            }else{
+                $this->session->set_flashdata('error','Invalid username and password!');
+                redirect(base_url()."user_login");
+            }
+        }
+        public function user_registration(){
+            $data=$this->Ordering_model->user_registration();            
+            if($data){
+                $user_data=array(
+                    'username' => $data['username'],
+                    'fullname' => $data['fullname'],                    
+                    'contactno' => $data['contactno'],
+                    'user_login' => true
+                );
+                $this->session->set_userdata($user_data);
+                redirect(base_url());
+            }else{
+                echo "<script>alert('Unable to save customer data!');window.history.back();</script>";
+            }
+        }
+        public function user_logout(){
+            $this->session->unset_userdata('username');
+            $this->session->unset_userdata('fullname');
+            $this->session->unset_userdata('contactno');
+            $this->session->unset_userdata('user_login');
+            redirect(base_url());
+        }
+        //======================User Module===============================
+
+        //======================Admin Module===============================
         public function admin(){
             $page = "index";
             if(!file_exists(APPPATH.'views/pages/admin/'.$page.".php")){
@@ -150,5 +235,6 @@
             $this->load->view('templates/admin/modal');        
             $this->load->view('templates/admin/footer');
         }
+        //======================Admin Module===============================
     }
 ?>

@@ -49,6 +49,14 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 | Examples:	my-controller/index	-> my_controller/index
 |		my-controller/my-method	-> my_controller/my_method
 */
+//===========================User Route=========================
+$route['user_logout'] = 'pages/user_logout';
+$route['user_registration'] = 'pages/user_registration';
+$route['user_authentication'] = 'pages/user_authentication';
+$route['user_login'] = 'pages/user_login';
+$route['view_product_details/(:any)'] = 'pages/view_product_details/$1';
+$route['view_product_category/(:any)'] = 'pages/view_product_category/$1';
+//===========================User Route=========================
 //===========================Admin Routes=======================
 $route['manage_order'] = 'pages/manage_order';
 $route['view_product_image/(:any)'] = 'pages/view_product_image/$1';

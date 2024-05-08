@@ -114,5 +114,40 @@
             $result=$this->db->query("SELECT * FROM stocks GROUP BY prodtype ORDER BY prodtype ASC");
             return $result->result_array();
         }
+        public function getProductByCategory($category){
+            $result=$this->db->query("SELECT * FROM stocks WHERE prodtype='$category'");
+            return $result->result_array();
+        }    
+        public function user_authentication(){
+            $username=$this->input->post('username');
+            $password=$this->input->post('password');
+            $result=$this->db->query("SELECT * FROM customer WHERE username='$username' AND `password`='$password'");
+            if($result){
+                return $result->row_array();
+            }else{
+                return false;
+            }
+        }
+        public function user_registration(){
+            $fullname=$this->input->post('fullname');
+            $contactno=$this->input->post('contactno');
+            $address=$this->input->post('address');
+            $username=$this->input->post('username');
+            $password=$this->input->post('password');
+            $datearray=date('Y-m-d');
+            $timearray=date('H:i:s');
+            $check=$this->db->query("SELECT * FROM customer WHERE username = '$username'");
+            if($check->num_rows()>0){
+                return false;
+            }else{
+                $result=$this->db->query("INSERT INTO customer(fullname,contactno,`address`,username,`password`,datearray,timearray) VALUES('$fullname','$contactno','$address','$username','$password','$datearray','$timearray')");
+            }
+            if($result){
+                $result=$this->db->query("SELECT * FROM customer WHERE username='$username' AND `password`='$password'");
+                return $result->row_array();
+            }else{
+                return false;
+            }            
+        }    
     }
 ?>

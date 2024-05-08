@@ -9,8 +9,8 @@
                         <div class="ml-auto text-right">
                             <nav aria-label="breadcrumb">
                                 <ol class="breadcrumb">
-                                    <li class="breadcrumb-item"><a href="#">Home</a></li>
-                                    <li class="breadcrumb-item active" aria-current="page">Library</li>
+                                    <li class="breadcrumb-item"><a href="<?=base_url();?>">Home</a></li>
+                                    <li class="breadcrumb-item active" aria-current="page">Items</li>
                                 </ol>
                             </nav>
                         </div>
@@ -27,211 +27,83 @@
                 <!-- ============================================================== -->
                 <!-- Start Page Content -->
                 <!-- ============================================================== -->
+                <?php
+                if(count($search_result)>0){                    
+                ?>
                 <div class="row el-element-overlay">
+                    <?php
+                    foreach($search_result as $item){
+                    ?>
                     <div class="col-lg-3 col-md-6">
                         <div class="card">
                             <div class="el-card-item">
-                                <div class="el-card-avatar el-overlay-1"> <img src="<?=base_url();?>design/assets/images/big/img1.jpg" alt="user" />
+                                <div class="el-card-avatar el-overlay-1"> <img src="data:image/jpg;charset=utf8;base64,<?=base64_encode($item['img']);?>" alt="user" />
                                     <div class="el-overlay">
                                         <ul class="list-style-none el-info">
-                                            <li class="el-item"><a class="btn default btn-outline image-popup-vertical-fit el-link" href="<?=base_url();?>design/assets/images/big/img1.jpg"><i class="mdi mdi-magnify-plus"></i></a></li>
-                                            <li class="el-item"><a class="btn default btn-outline el-link" href="javascript:void(0);"><i class="mdi mdi-link"></i></a></li>
+                                            <li class="el-item"><a class="btn default btn-outline image-popup-vertical-fit el-link" href="data:image/jpg;charset=utf8;base64,<?=base64_encode($item['img']);?>"><i class="mdi mdi-magnify-plus"></i></a></li>
+                                            <li class="el-item"><a class="btn default btn-outline el-link" href="<?=base_url();?>view_product_details/<?=$item['id'];?>"><i class="mdi mdi-eye"></i></a></li>
                                         </ul>
                                     </div>
                                 </div>
                                 <div class="el-card-content">
-                                    <h4 class="m-b-0">Project title</h4> <span class="text-muted">subtitle of project</span>
+                                    <h4 class="m-b-0"><?=$item['description'];?></h4> <span class="text-muted"><?=number_format($item['sellingprice'],2);?></span>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="col-lg-3 col-md-6">
-                        <div class="card">
-                            <div class="el-card-item">
-                                <div class="el-card-avatar el-overlay-1"> <img src="<?=base_url();?>design/assets/images/big/img2.jpg" alt="user" />
-                                    <div class="el-overlay">
-                                        <ul class="list-style-none el-info">
-                                            <li class="el-item"><a class="btn default btn-outline image-popup-vertical-fit el-link" href="<?=base_url();?>design/assets/images/big/img2.jpg"><i class="mdi mdi-magnify-plus"></i></a></li>
-                                            <li class="el-item"><a class="btn default btn-outline el-link" href="javascript:void(0);"><i class="mdi mdi-link"></i></a></li>
-                                        </ul>
-                                    </div>
-                                </div>
-                                <div class="el-card-content">
-                                    <h4 class="m-b-0">Project title</h4> <span class="text-muted">subtitle of project</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-3 col-md-6">
-                        <div class="card">
-                            <div class="el-card-item">
-                                <div class="el-card-avatar el-overlay-1"> <img src="<?=base_url();?>design/assets/images/big/img3.jpg" alt="user" />
-                                    <div class="el-overlay">
-                                        <ul class="list-style-none el-info">
-                                            <li class="el-item"><a class="btn default btn-outline image-popup-vertical-fit el-link" href="<?=base_url();?>design/assets/images/big/img3.jpg"><i class="mdi mdi-magnify-plus"></i></a></li>
-                                            <li class="el-item"><a class="btn default btn-outline el-link" href="javascript:void(0);"><i class="mdi mdi-link"></i></a></li>
-                                        </ul>
-                                    </div>
-                                </div>
-                                <div class="el-card-content">
-                                    <h4 class="m-b-0">Project title</h4> <span class="text-muted">subtitle of project</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-3 col-md-6">
-                        <div class="card">
-                            <div class="el-card-item">
-                                <div class="el-card-avatar el-overlay-1"> <img src="<?=base_url();?>design/assets/images/big/img4.jpg" alt="user" />
-                                    <div class="el-overlay">
-                                        <ul class="list-style-none el-info">
-                                            <li class="el-item"><a class="btn default btn-outline image-popup-vertical-fit el-link" href="<?=base_url();?>design/assets/images/big/img4.jpg"><i class="mdi mdi-magnify-plus"></i></a></li>
-                                            <li class="el-item"><a class="btn default btn-outline el-link" href="javascript:void(0);"><i class="mdi mdi-link"></i></a></li>
-                                        </ul>
-                                    </div>
-                                </div>
-                                <div class="el-card-content">
-                                    <h4 class="m-b-0">Project title</h4> <span class="text-muted">subtitle of project</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-3 col-md-6">
-                        <div class="card">
-                            <div class="el-card-item">
-                                <div class="el-card-avatar el-overlay-1"> <img src="<?=base_url();?>design/assets/images/big/img3.jpg" alt="user" />
-                                    <div class="el-overlay">
-                                        <ul class="list-style-none el-info">
-                                            <li class="el-item"><a class="btn default btn-outline image-popup-vertical-fit el-link" href="<?=base_url();?>design/assets/images/big/img3.jpg"><i class="mdi mdi-magnify-plus"></i></a></li>
-                                            <li class="el-item"><a class="btn default btn-outline el-link" href="javascript:void(0);"><i class="mdi mdi-link"></i></a></li>
-                                        </ul>
-                                    </div>
-                                </div>
-                                <div class="el-card-content">
-                                    <h4 class="m-b-0">Project title</h4> <span class="text-muted">subtitle of project</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-3 col-md-6">
-                         <div class="card">
-                            <div class="el-card-item">
-                                <div class="el-card-avatar el-overlay-1"> <img src="<?=base_url();?>design/assets/images/big/img5.jpg" alt="user" />
-                                    <div class="el-overlay">
-                                        <ul class="list-style-none el-info">
-                                            <li class="el-item"><a class="btn default btn-outline image-popup-vertical-fit el-link" href="<?=base_url();?>design/assets/images/big/img5.jpg"><i class="mdi mdi-magnify-plus"></i></a></li>
-                                            <li class="el-item"><a class="btn default btn-outline el-link" href="javascript:void(0);"><i class="mdi mdi-link"></i></a></li>
-                                        </ul>
-                                    </div>
-                                </div>
-                                <div class="el-card-content">
-                                    <h4 class="m-b-0">Project title</h4> <span class="text-muted">subtitle of project</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-3 col-md-6">
-                        <div class="card">
-                            <div class="el-card-item">
-                                <div class="el-card-avatar el-overlay-1"> <img src="<?=base_url();?>design/assets/images/big/img6.jpg" alt="user" />
-                                    <div class="el-overlay">
-                                        <ul class="list-style-none el-info">
-                                            <li class="el-item"><a class="btn default btn-outline image-popup-vertical-fit el-link" href="<?=base_url();?>design/assets/images/big/img6.jpg"><i class="mdi mdi-magnify-plus"></i></a></li>
-                                            <li class="el-item"><a class="btn default btn-outline el-link" href="javascript:void(0);"><i class="mdi mdi-link"></i></a></li>
-                                        </ul>
-                                    </div>
-                                </div>
-                                <div class="el-card-content">
-                                    <h4 class="m-b-0">Project title</h4> <span class="text-muted">subtitle of project</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-3 col-md-6">
-                        <div class="card">
-                            <div class="el-card-item">
-                                <div class="el-card-avatar el-overlay-1"> <img src="<?=base_url();?>design/assets/images/big/img1.jpg" alt="user" />
-                                    <div class="el-overlay">
-                                        <ul class="list-style-none el-info">
-                                            <li class="el-item"><a class="btn default btn-outline image-popup-vertical-fit el-link" href="<?=base_url();?>design/assets/images/big/img1.jpg"><i class="mdi mdi-magnify-plus"></i></a></li>
-                                            <li class="el-item"><a class="btn default btn-outline el-link" href="javascript:void(0);"><i class="mdi mdi-link"></i></a></li>
-                                        </ul>
-                                    </div>
-                                </div>
-                                <div class="el-card-content">
-                                    <h4 class="m-b-0">Project title</h4> <span class="text-muted">subtitle of project</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-3 col-md-6">
-                        <div class="card">
-                            <div class="el-card-item">
-                                <div class="el-card-avatar el-overlay-1"> <img src="<?=base_url();?>design/assets/images/big/img1.jpg" alt="user" />
-                                    <div class="el-overlay">
-                                        <ul class="list-style-none el-info">
-                                            <li class="el-item"><a class="btn default btn-outline image-popup-vertical-fit el-link" href="<?=base_url();?>design/assets/images/big/img1.jpg"><i class="mdi mdi-magnify-plus"></i></a></li>
-                                            <li class="el-item"><a class="btn default btn-outline el-link" href="javascript:void(0);"><i class="mdi mdi-link"></i></a></li>
-                                        </ul>
-                                    </div>
-                                </div>
-                                <div class="el-card-content">
-                                    <h4 class="m-b-0">Project title</h4> <span class="text-muted">subtitle of project</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-3 col-md-6">
-                        <div class="card">
-                            <div class="el-card-item">
-                                <div class="el-card-avatar el-overlay-1"> <img src="<?=base_url();?>design/assets/images/big/img2.jpg" alt="user" />
-                                    <div class="el-overlay">
-                                        <ul class="list-style-none el-info">
-                                            <li class="el-item"><a class="btn default btn-outline image-popup-vertical-fit el-link" href="<?=base_url();?>design/assets/images/big/img2.jpg"><i class="mdi mdi-magnify-plus"></i></a></li>
-                                            <li class="el-item"><a class="btn default btn-outline el-link" href="javascript:void(0);"><i class="mdi mdi-link"></i></a></li>
-                                        </ul>
-                                    </div>
-                                </div>
-                                <div class="el-card-content">
-                                    <h4 class="m-b-0">Project title</h4> <span class="text-muted">subtitle of project</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-3 col-md-6">
-                        <div class="card">
-                            <div class="el-card-item">
-                                <div class="el-card-avatar el-overlay-1"> <img src="<?=base_url();?>design/assets/images/big/img3.jpg" alt="user" />
-                                    <div class="el-overlay">
-                                        <ul class="list-style-none el-info">
-                                            <li class="el-item"><a class="btn default btn-outline image-popup-vertical-fit el-link" href="<?=base_url();?>design/assets/images/big/img3.jpg"><i class="mdi mdi-magnify-plus"></i></a></li>
-                                            <li class="el-item"><a class="btn default btn-outline el-link" href="javascript:void(0);"><i class="mdi mdi-link"></i></a></li>
-                                        </ul>
-                                    </div>
-                                </div>
-                                <div class="el-card-content">
-                                    <h4 class="m-b-0">Project title</h4> <span class="text-muted">subtitle of project</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-3 col-md-6">
-                        <div class="card">
-                            <div class="el-card-item">
-                                <div class="el-card-avatar el-overlay-1"> <img src="<?=base_url();?>design/assets/images/big/img4.jpg" alt="user" />
-                                    <div class="el-overlay">
-                                        <ul class="list-style-none el-info">
-                                            <li class="el-item"><a class="btn default btn-outline image-popup-vertical-fit el-link" href="<?=base_url();?>design/assets/images/big/img4.jpg"><i class="mdi mdi-magnify-plus"></i></a></li>
-                                            <li class="el-item"><a class="btn default btn-outline el-link" href="javascript:void(0);"><i class="mdi mdi-link"></i></a></li>
-                                        </ul>
-                                    </div>
-                                </div>
-                                <div class="el-card-content">
-                                    <h4 class="m-b-0">Project title</h4> <span class="text-muted">subtitle of project</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                    </div>                                        
+                    <?php
+                    }
+                    ?>
                 </div>               
+                <?php                    
+                }else{                    
+                    foreach($category as $item){
+                    ?>
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="card">
+                                <div class="card-body">
+                                    <table width="100%" border="0" cellpadding="0" cellspacing="0">
+                                        <tr>
+                                            <td><h3 class="card-title"><?=$item['prodtype'];?></h3></td>
+                                            <td align="right"><a href="<?=base_url();?>view_product_category/<?=$item['prodtype'];?>">View All</a></td>
+                                        </tr>
+                                    </table>                                    
+                                    <div class="row">
+                                        <div class="row el-element-overlay">
+                                        <?php
+                                        $query=$this->Ordering_model->getProductByCategory($item['prodtype']);
+                                        foreach($query as $row){
+                                        ?>                                        
+                                            <div class="col-lg-2 col-md-6">
+                                                <div class="card">
+                                                    <div class="el-card-item">
+                                                        <div class="el-card-avatar el-overlay-1"> <img src="data:image/jpg;charset=utf8;base64,<?=base64_encode($row['img']);?>"/>
+                                                            <div class="el-overlay">
+                                                                <ul class="list-style-none el-info">
+                                                                    <li class="el-item"><a class="btn default btn-outline image-popup-vertical-fit el-link" href="data:image/jpg;charset=utf8;base64,<?=base64_encode($row['img']);?>"><i class="mdi mdi-magnify-plus"></i></a></li>
+                                                                    <li class="el-item"><a class="btn default btn-outline el-link" href="<?=base_url();?>view_product_details/<?=$item['id'];?>"><i class="mdi mdi-eye"></i></a></li>
+                                                                </ul>
+                                                            </div>
+                                                        </div>
+                                                        <div class="el-card-content">
+                                                            <h4 class="m-b-0"><?=$row['description'];?></h4> <span class="text-muted">P <?=number_format($row['sellingprice'],2);?></span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>                                        
+                                        <?php
+                                        }
+                                    ?>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                    <?php
+                    }
+                }
+                ?>
             </div>            
         </div>
