@@ -100,6 +100,51 @@
             $this->session->unset_userdata('user_login');
             redirect(base_url());
         }
+        public function search_product(){
+            $page = "index";
+            if(!file_exists(APPPATH.'views/pages/'.$page.".php")){
+                show_404();
+            }
+            $data['title'] = "Store Items";
+            $data['category'] = $this->Ordering_model->getAllProductsByCategory();
+            $data['search_result'] = $this->Ordering_model->getProductByDescription();                                 
+            $this->load->view('templates/header');
+            $this->load->view('templates/user/navbar');
+            $this->load->view('templates/user/sidebar',$data);
+            $this->load->view('pages/'.$page,$data);    
+            $this->load->view('templates/user/modal');        
+            $this->load->view('templates/user/footer');
+        }
+        public function add_to_cart(){
+            $id=$this->input->post('id');
+            $quantity=$this->input->post('quantity');
+            $add=$this->Ordering_model->add_to_cart($id,$quantity);
+            if($add){
+                echo "<script>alert('Item successfully added to cart!');window.location='".base_url()."';</script>";
+            }else{
+                echo "<script>alert('Unable to add item to cart!');window.history.back();</script>";
+            }
+
+        }
+        public function manage_cart(){
+            $page = "cart";
+            if(!file_exists(APPPATH.'views/pages/'.$page.".php")){
+                show_404();
+            }
+            $data['title'] = "My Cart";
+            $data['category'] = $this->Ordering_model->getAllProductsByCategory();
+            $data['items'] = $this->Ordering_model->getAllItemCart($this->session->username,"pending");                                 
+            $this->load->view('templates/header');
+            $this->load->view('templates/user/navbar');
+            $this->load->view('templates/user/sidebar',$data);
+            $this->load->view('pages/'.$page,$data);    
+            $this->load->view('templates/user/modal');        
+            $this->load->view('templates/user/footer');
+        }
+        public function update_quantity($id,$type){
+            $this->Ordering_model->changeqty($id,$type);
+            redirect(base_url()."manage_cart");
+        }
         //======================User Module===============================
 
         //======================Admin Module===============================

@@ -45,6 +45,8 @@
             document.getElementById('product_unitcost').value = '';
             document.getElementById('product_sellingprice').value = '';
             document.getElementById('product_status').value = '';
+            document.getElementById('product_max_level').value = '';
+            document.getElementById('product_min_level').value = '';
         });
         $('.editProduct').click(function(){
             var data=$(this).data('id');
@@ -54,7 +56,9 @@
             document.getElementById('product_category').value = id[2];
             document.getElementById('product_unitcost').value = id[3];
             document.getElementById('product_sellingprice').value = id[4];
-            document.getElementById('product_status').value = id[5];
+            document.getElementById('product_status').value = id[5];            
+            document.getElementById('product_max_level').value = id[6];            
+            document.getElementById('product_min_level').value = id[7];            
         });
         $('.addQuantity').click(function(){
             var id=$(this).data('id');

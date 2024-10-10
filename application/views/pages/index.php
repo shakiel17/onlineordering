@@ -23,6 +23,8 @@
             <!-- ============================================================== -->
             <!-- Container fluid  -->
             <!-- ============================================================== -->
+
+            <center><?php if($this->session->failed){?><div class="alert alert-danger"><?=$this->session->failed;?></div><?php } ?></center>
             <div class="container-fluid">
                 <!-- ============================================================== -->
                 <!-- Start Page Content -->

@@ -67,15 +67,15 @@
                         <!-- Search -->
                         <!-- ============================================================== -->
                         <li class="nav-item search-box"> <a class="nav-link waves-effect waves-dark" href="javascript:void(0)"><i class="ti-search"></i></a>
-                            <form class="app-search position-absolute">
-                                <input type="text" class="form-control" placeholder="Search &amp; enter"> <a class="srh-btn"><i class="ti-close"></i></a>
+                            <form class="app-search position-absolute" action="<?=base_url();?>search_product" method="POST">
+                                <input type="text" name="description" class="form-control" placeholder="Search Product &amp; enter"> <a class="srh-btn"><i class="ti-close"></i></a>
                             </form>
                         </li>
                     </ul>
                     <!-- ============================================================== -->
                     <!-- Right side toggle and nav items -->
                     <!-- ============================================================== -->
-                    <ul class="navbar-nav float-right">
+                    <ul class="navbar-nav float-end">
                         <!-- ============================================================== -->
                         <!-- Comment -->
                         <!-- ============================================================== -->                        
@@ -89,9 +89,12 @@
                                 if($this->session->user_login){
                                 ?>
                         <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle waves-effect waves-dark" href="" id="2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="font-24 mdi mdi-cart"></i>
-                            <span class="badge badge-danger">0</span>
-                            </a>                            
+                            <a href="<?=base_url();?>manage_cart" class="nav-link dropdown-toggle waves-effect waves-dark" id="2"  aria-haspopup="true" aria-expanded="false"> <i class="font-24 mdi mdi-cart"></i>                            
+                            <?php
+                            $cart=$this->Ordering_model->getAllItemCart($this->session->username,"pending");
+                            ?>
+                            <span class="badge badge-danger"><?=count($cart);?></span>
+                            </a>                                                        
                             <!-- <div class="dropdown-menu dropdown-menu-right mailbox animated bounceInDown" aria-labelledby="2">
                                 <ul class="list-style-none">
                                     <li>

@@ -63,6 +63,18 @@
                         </select>
                     </div>
                 </div>
+                <div class="form-group row">
+                    <label for="fname" class="col-sm-2 control-label col-form-label">Max Level</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" id="product_max_level" name="max_level" placeholder="Max Level">
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="fname" class="col-sm-2 control-label col-form-label">Min Level</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" id="product_min_level" name="min_level" placeholder="Min Level">
+                    </div>
+                </div>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>

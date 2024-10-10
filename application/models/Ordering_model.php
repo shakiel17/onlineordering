@@ -24,11 +24,13 @@
             $unitcost=$this->input->post('unitcost');
             $sellingprice=$this->input->post('sellingprice');
             $status=$this->input->post('status');
+            $max=$this->input->post('max_level');
+            $min=$this->input->post('min_level');
             $datearray=date('Y-m-d');
             $timearray=date('H:i:s');
             if($id==""){
                 $code=date('YmdHis');
-                $result=$this->db->query("INSERT INTO stocks(code,`description`,prodtype,unitcost,sellingprice,`status`,datearray,timearray) VALUES('$code','$description','$prodtype','$unitcost','$sellingprice','$status','$datearray','$timearray')");                
+                $result=$this->db->query("INSERT INTO stocks(code,`description`,prodtype,unitcost,sellingprice,`status`,datearray,timearray,critical_level,max_level) VALUES('$code','$description','$prodtype','$unitcost','$sellingprice','$status','$datearray','$timearray','$min','$max')");                
                 if($result){
                     $result1=$this->db->query("INSERT INTO stocktable(code,unitcost,quantity,trantype,datearray,timearray) VALUES('$code','$sellingprice','1','add','$datearray','$timearray')");
                     if($result1){                       
@@ -41,7 +43,7 @@
                     return false;
                 }
             }else{
-                $result=$this->db->query("UPDATE stocks SET description='$description',prodtype='$prodtype',unitcost='$unitcost',sellingprice='$sellingprice',`status`='$status' WHERE id='$id'");
+                $result=$this->db->query("UPDATE stocks SET description='$description',prodtype='$prodtype',unitcost='$unitcost',sellingprice='$sellingprice',`status`='$status',critical_level='$min',max_level='$max' WHERE id='$id'");
                 if($result){
                     $result1=$this->db->query("UPDATE stocktable SET unitcost='$sellingprice' WHERE id='$id'");
                     if($result1){
@@ -149,5 +151,71 @@
                 return false;
             }            
         }    
+        public function getProductByDescription(){
+            $description=$this->input->post('description');
+            $result=$this->db->query("SELECT * FROM stocks WHERE `description` LIKE '%$description%' OR prodtype LIKE '%$description%' ORDER BY `description` ASC");            
+            if(count($result->result_array())==0){
+                $this->session->set_flashdata('failed','No record found!');
+            }else{
+                $this->session->set_flashdata('failed','');
+            }
+            return $result->result_array();                     
+        }
+        public function add_to_cart($id,$quantity){
+            $username=$this->session->username;
+            $fullname=$this->session->fullname;
+            $query=$this->db->query("SELECT * FROM customer WHERE username='$username'");
+            $user=$query->row_array();
+            $address=$user['address'];
+            $contactno=$user['contactno'];
+            $query=$this->db->query("SELECT * FROM stocks WHERE code='$id'");
+            $item=$query->row_array();
+            $unitcost=$item['unitcost'];
+            $query=$this->db->query("SELECT SUM(quantity) as soh FROM stocktable WHERE code='$id' GROUP BY code");
+            $row=$query->row_array();
+            $soh=$row['soh'];
+            $date=date('Y-m-d');
+            $time=date('H:i:s');
+            $check=$this->db->query("SELECT * FROM cart WHERE trans_code='' AND `status`='pending' AND code='$id' AND username='$username'");
+            if($check->num_rows()>0){
+                $r=$check->row_array();
+                $qty=$r['quantity'];
+                $cid=$r['id'];
+                $totalqty=$qty+$quantity;
+                if($soh >= $totalqty){
+                    $result=$this->db->query("UPDATE cart SET quantity='$totalqty' WHERE id='$cid'");
+                }
+            }else{
+                if($soh >= $quantity){
+                    $result=$this->db->query("INSERT INTO cart(username,firstname,`address`,contactno,email,trans_code,code,quantity,unitcost,trantype,datearray,timearray) VALUES('$username','$fullname','$address','$contactno','','','$id','$quantity','$unitcost','','$date','$time')");
+                }
+            }
+            if($result){
+                return true;
+            }else{
+                return false;
+            }
+        }
+
+        public function getAllItemCart($username,$status){
+            $result=$this->db->query("SELECT * FROM cart WHERE username='$username' AND `status`='$status'");
+            return $result->result_array();
+        }
+        public function changeqty($id,$type){
+            $query=$this->db->query("SELECT * FROM cart WHERE id='$id'");
+            $item=$query->row_array();
+            if($type=="deduct"){
+                $qty=$item['quantity']-1;
+            }else if($type=="add"){
+                $qty=$item['quantity']+1;
+            }else{
+                $qty=0;
+            }
+            if($qty <= 0){
+                $result=$this->db->query("DELETE FROM cart WHERE id='$id'");
+            }else{
+                $result=$this->db->query("UPDATE cart SET quantity='$qty' WHERE id='$id'");
+            }            
+        }
     }
 ?>

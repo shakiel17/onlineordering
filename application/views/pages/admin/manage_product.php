@@ -80,7 +80,7 @@
                                                     echo "<td align='center'>$quantity</td>";
                                                     ?>
                                                     <td>
-                                                        <a href="#" class="btn btn-warning btn-sm editProduct" data-toggle="modal" data-target="#ManageProduct" data-id="<?=$item['id'];?>_<?=$item['description'];?>_<?=$item['prodtype'];?>_<?=$item['unitcost'];?>_<?=$item['sellingprice'];?>_<?=$item['status'];?>">Edit</a>
+                                                        <a href="#" class="btn btn-warning btn-sm editProduct" data-toggle="modal" data-target="#ManageProduct" data-id="<?=$item['id'];?>_<?=$item['description'];?>_<?=$item['prodtype'];?>_<?=$item['unitcost'];?>_<?=$item['sellingprice'];?>_<?=$item['status'];?>_<?=$item['max_level'];?>_<?=$item['critical_level'];?>">Edit</a>
                                                         <a href="#" class="btn btn-info btn-sm addQuantity" data-toggle="modal" data-target="#AddQty" data-id="<?=$item['id'];?>">Add Qty</a>
                                                         <a href="<?=base_url();?>delete_product/<?=$item['code'];?>" class="btn btn-danger btn-sm" onclick="return confirm('Do you wish to delete this item?');return false;">Delete</a>
                                                     </td>
