@@ -197,8 +197,12 @@
             }
         }
 
-        public function getAllItemCart($username,$status){
-            $result=$this->db->query("SELECT * FROM cart WHERE username='$username' AND `status`='$status'");
+        public function getAllItemCart($username,$status,$transcode){
+            $result=$this->db->query("SELECT * FROM cart WHERE username='$username' AND `status`='$status' AND trans_code='$transcode'");
+            return $result->result_array();
+        }
+        public function getAllItemCartInvoice($username,$transcode){
+            $result=$this->db->query("SELECT * FROM cart WHERE trans_code='$transcode'");
             return $result->result_array();
         }
         public function changeqty($id,$type){
@@ -216,6 +220,41 @@
             }else{
                 $result=$this->db->query("UPDATE cart SET quantity='$qty' WHERE id='$id'");
             }            
+        }
+
+        public function checkout($refno){
+            $id=$this->input->post('code');
+            $type=$this->input->post('payment_type');
+            $amount=$this->input->post('amount');
+            $date=date('Y-m-d');
+            $time=date('H:i:s');
+            $fileName=basename($_FILES["file"]["name"]);
+            $fileType=pathinfo($fileName, PATHINFO_EXTENSION);
+            $allowTypes = array('jpg','png','jpeg','gif');
+            if(in_array($fileType,$allowTypes)){
+                $image = $_FILES["file"]["tmp_name"];
+                $imgContent=addslashes(file_get_contents($image));                
+                foreach($id as $code){
+                    $result=$this->db->query("UPDATE cart SET trans_code='$refno',trantype='$type',book_date='$date',book_time='$time',attachment='$imgContent',amount='$amount' WHERE id='$code'");
+                }
+            }else{
+                return false;
+            }       
+            
+            if($result){
+                return true;                
+            }else{
+                return false;
+            }
+        }
+        public function getAllPurchases(){
+            $username=$this->session->username;
+            $result=$this->db->query("SELECT * FROM cart WHERE username='$username' AND trans_code <> '' GROUP BY trans_code ORDER BY book_date DESC");
+            return $result->result_array();
+        }
+        public function getPendingOrders(){
+            $result=$this->db->query("SELECT * FROM cart WHERE trans_code <> '' AND `status`='pending' GROUP BY trans_code");
+            return $result->result_array();
         }
     }
 ?>

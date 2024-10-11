@@ -91,7 +91,7 @@
                         <li class="nav-item dropdown">
                             <a href="<?=base_url();?>manage_cart" class="nav-link dropdown-toggle waves-effect waves-dark" id="2"  aria-haspopup="true" aria-expanded="false"> <i class="font-24 mdi mdi-cart"></i>                            
                             <?php
-                            $cart=$this->Ordering_model->getAllItemCart($this->session->username,"pending");
+                            $cart=$this->Ordering_model->getAllItemCart($this->session->username,"pending","");
                             ?>
                             <span class="badge badge-danger"><?=count($cart);?></span>
                             </a>                                                        
@@ -164,7 +164,7 @@
                                 }
                                 if($this->session->user_login){
                                 ?>                                                                                               
-                                <a class="dropdown-item" href="javascript:void(0)"><i class="ti-wallet m-r-5 m-l-5"></i> Purchase History</a>                                
+                                <a class="dropdown-item" href="<?=base_url();?>purchase_history"><i class="ti-wallet m-r-5 m-l-5"></i> Purchase History</a>                                
                                 <div class="dropdown-divider"></div>
                                 <a class="dropdown-item" href="javascript:void(0)"><i class="ti-settings m-r-5 m-l-5"></i> Account Setting</a>
                                 <div class="dropdown-divider"></div>

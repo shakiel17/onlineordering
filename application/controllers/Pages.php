@@ -11,7 +11,10 @@
             }
             $data['title'] = "Store Items";
             $data['category'] = $this->Ordering_model->getAllProductsByCategory();
-            $data['search_result'] = array();            
+            $data['search_result'] = array();  
+            if($this->session->admin_login)          {
+                redirect(base_url()."admin");
+            }
             $this->load->view('templates/header');
             $this->load->view('templates/user/navbar');
             $this->load->view('templates/user/sidebar',$data);
@@ -133,7 +136,7 @@
             }
             $data['title'] = "My Cart";
             $data['category'] = $this->Ordering_model->getAllProductsByCategory();
-            $data['items'] = $this->Ordering_model->getAllItemCart($this->session->username,"pending");                                 
+            $data['items'] = $this->Ordering_model->getAllItemCart($this->session->username,"pending","");                                 
             $this->load->view('templates/header');
             $this->load->view('templates/user/navbar');
             $this->load->view('templates/user/sidebar',$data);
@@ -144,6 +147,57 @@
         public function update_quantity($id,$type){
             $this->Ordering_model->changeqty($id,$type);
             redirect(base_url()."manage_cart");
+        }
+        public function checkout(){
+            $refno="RN".date('YmdHis');
+            $checkout=$this->Ordering_model->checkout($refno);
+            if($checkout){
+                echo "<script>alert('Order successfully checked out!');window.location='".base_url()."view_invoice/$refno';</script>";
+            }else{
+                echo "<script>alert('Unable to checkout order!');window.location='".base_url()."manage_cart';</script>";
+            }
+        }
+        public function view_invoice($refno){
+            $page = "invoice";
+            if(!file_exists(APPPATH.'views/pages/'.$page.".php")){
+                show_404();
+            }
+            $data['title'] = "Order Invoice";
+            $data['category'] = $this->Ordering_model->getAllProductsByCategory();
+            $data['items'] = $this->Ordering_model->getAllItemCartInvoice($this->session->username,$refno);
+            $data['refno'] = $refno;
+            $data['pending'] = $this->Ordering_model->getPendingOrders();
+
+            if($this->session->user_login){
+                $this->load->view('templates/header');
+                $this->load->view('templates/user/navbar');
+                $this->load->view('templates/user/sidebar',$data);
+                $this->load->view('pages/'.$page,$data);    
+                $this->load->view('templates/user/modal');        
+                $this->load->view('templates/user/footer');
+            }else{
+                $this->load->view('templates/header');
+                $this->load->view('templates/admin/navbar',$data);
+                $this->load->view('templates/admin/sidebar');
+                $this->load->view('pages/'.$page,$data);    
+                $this->load->view('templates/admin/modal');        
+                $this->load->view('templates/admin/footer');
+            }            
+        }
+        public function purchase_history(){
+            $page = "purchase_history";
+            if(!file_exists(APPPATH.'views/pages/'.$page.".php")){
+                show_404();
+            }
+            $data['title'] = "Purchase Hsitory";
+            $data['category'] = $this->Ordering_model->getAllProductsByCategory();
+            $data['items'] = $this->Ordering_model->getAllPurchases();
+            $this->load->view('templates/header');
+            $this->load->view('templates/user/navbar');
+            $this->load->view('templates/user/sidebar',$data);
+            $this->load->view('pages/'.$page,$data);    
+            $this->load->view('templates/user/modal');        
+            $this->load->view('templates/user/footer');
         }
         //======================User Module===============================
 
@@ -191,9 +245,9 @@
                 $this->session->set_flashdata('failed','You are not logged in! Please login.');
                 redirect(base_url()."admin");
             }
-        
+            $data['pending'] = $this->Ordering_model->getPendingOrders();
             $this->load->view('templates/header');
-            $this->load->view('templates/admin/navbar');
+            $this->load->view('templates/admin/navbar',$data);
             $this->load->view('templates/admin/sidebar');
             $this->load->view('pages/admin/'.$page);    
             $this->load->view('templates/admin/modal');        
@@ -212,8 +266,9 @@
                 redirect(base_url()."admin");
             }
             $data['products'] = $this->Ordering_model->getAllProducts();
+            $data['pending'] = $this->Ordering_model->getPendingOrders();
             $this->load->view('templates/header');
-            $this->load->view('templates/admin/navbar');
+            $this->load->view('templates/admin/navbar',$data);
             $this->load->view('templates/admin/sidebar');
             $this->load->view('pages/admin/'.$page,$data);    
             $this->load->view('templates/admin/modal');        
@@ -273,8 +328,9 @@
                 redirect(base_url()."admin");
             }
             $data['orders'] = $this->Ordering_model->getAllOrders();
+            $data['pending'] = $this->Ordering_model->getPendingOrders();
             $this->load->view('templates/header');
-            $this->load->view('templates/admin/navbar');
+            $this->load->view('templates/admin/navbar',$data);
             $this->load->view('templates/admin/sidebar');
             $this->load->view('pages/admin/'.$page,$data);    
             $this->load->view('templates/admin/modal');        

@@ -53,6 +53,8 @@
                                                 <th>Name</th>
                                                 <th>No. of Items</th>
                                                 <th>Date/Time</th>                                                
+                                                <th>Payment Type</th>
+                                                <th>Attachment</th>
                                                 <th width="15%">Action</th>
                                             </tr>
                                         </thead>
@@ -62,20 +64,23 @@
                                             foreach($orders as $item){
                                                 $qty=$this->Ordering_model->getQuantity($item['code']);
                                                 $quantity=$qty['quantity'];
-                                                if($item['img']==""){
-                                                    $image="<a href='#' data-toggle='modal' data-target='#manageProductImage' data-id='$item[id]' class='addProductImage'>Add Image</a>";
-                                                }else{
-                                                    $image="<a href='#' data-toggle='modal' data-target='#manageProductImage' data-id='$item[id]' class='addProductImage'><img src='data:image/jpg;charset=utf8;base64,".base64_encode($item['img'])."' width='70'></a><br><a href='".base_url()."view_product_image/$item[id]' target='_blank'>View Image</a>";
-                                                }
+                                                    $image="<a href='data:image/jpg;charset=utf8;base64,".base64_encode($item['attachment'])."' data-toggle='modal' class='image-popup-vertical-fit el-link'><img src='data:image/jpg;charset=utf8;base64,".base64_encode($item['attachment'])."' width='70'></a>";
+                                                    if($item['trantype']=="Half"){
+                                                        $pay="Down payment";
+                                                    }else{
+                                                        $pay="Full payment";
+                                                    }
                                                 echo "<tr>";
                                                     echo "<td>$x.</td>";                                                    
                                                     echo "<td>$item[trans_code]</td>";
                                                     echo "<td>$item[lastname], $item[firstname]</td>";
                                                     echo "<td align='center'>$item[no_of_items]</td>";
                                                     echo "<td align='center'>".date('m/d/Y',strtotime($item['datearray']))." ".date('h:i A',strtotime($item['timearray']))."</td>";                                                    
+                                                    echo "<td align='center'>$pay</td>";
+                                                    echo "<td align='center'>$image</td>";
                                                     ?>
                                                     <td>
-                                                        
+                                                        <a href="<?=base_url();?>view_invoice/<?=$item['trans_code'];?>" class="btn btn-success btn-sm">View Invoice</a>
                                                     </td>
                                                     <?php
                                                 echo "</tr>";

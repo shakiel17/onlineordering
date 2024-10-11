@@ -9,9 +9,9 @@
               <div class="ml-auto text-right">
                 <nav aria-label="breadcrumb">
                   <ol class="breadcrumb">
-                    <li class="breadcrumb-item"><a href="#">Home</a></li>
+                    <li class="breadcrumb-item"><a href="#<?=base_url();?>">Home</a></li>
                     <li class="breadcrumb-item active" aria-current="page">
-                      Library
+                      Cart
                     </li>
                   </ol>
                 </nav>
@@ -30,12 +30,13 @@
           <!-- Start Page Content -->
           <!-- ============================================================== -->
           <div class="row">            
-            <div class="col-md-8">
+            <div class="col-md-8 col-sm-12">
               <div class="card">
                 <div class="card-body">
                   <h5 class="card-title mb-0">Items</h5>
                 </div>
                 <?=form_open_multipart(base_url()."checkout",array("onsubmit" => "return confirm('Do you wish to checkout these times?');return false;"));?>
+                <div class="table-responsive">
                 <table class="table" style="font-size:16px;">
                   <thead>
                     <tr>
@@ -58,7 +59,7 @@
                       <td align="center"><input type="checkbox" name="code[]" value="<?=$item['id'];?>" class="checkbox"></td>
                       <td><?=$desc['description'];?></td>
                       <td align="right"><?=number_format($item['unitcost'],2);?></td>
-                      <td><a href="<?=base_url();?>update_quantity/<?=$item['id'];?>/deduct" class="btn btn-info btn-sm">-</a> <input type="text" name="quantity[]" value="<?=$item['quantity'];?>" style="width:50px; text-align:center;" id="cart_qty"> <a href="<?=base_url();?>update_quantity/<?=$item['id'];?>/add" class="btn btn-info btn-sm">+</a></td>
+                      <td><a href="<?=base_url();?>update_quantity/<?=$item['id'];?>/deduct" class="btn btn-info btn-sm"  style="width:50px;">-</a> <input type="text" name="quantity[]" value="<?=$item['quantity'];?>" style="width:50px; text-align:center;" id="cart_qty"> <a href="<?=base_url();?>update_quantity/<?=$item['id'];?>/add" class="btn btn-info btn-sm"  style="width:50px;">+</a></td>
                       <td align="right"><?=number_format($item['unitcost']*$item['quantity'],2);?></td>
                       <td>                        
                         <a
@@ -89,7 +90,7 @@
                     </tr>
                 </tfoot>
                 </table>
-                
+                  </div>
               </div>
               <!-- card new -->
               
@@ -117,10 +118,14 @@
                       <td>
                         <select name="payment_type" class="form-control" required>
                             <option value="">Select Payment Type</option>
-                            <option value="Half">Half</option>
-                            <option value="Full">Full</option>
+                            <option value="Half">Down payment</option>
+                            <option value="Full">Full payment</option>
                         </select>
                     </td>
+                    </tr>
+                    <tr>
+                      <td>Amount Paid</td>
+                      <td align="right"><input type="text" name="amount" class="form-control" required></td>
                     </tr>
                     <tr>
                       <td>Attachment:</td>

@@ -49,6 +49,9 @@ CREATE TABLE `cart` (
   `datearray` date DEFAULT NULL,
   `timearray` time DEFAULT NULL,
   `book_date` date DEFAULT NULL,
+  `book_time` time DEFAULT NULL,
+  `attachment` longblob DEFAULT NULL,
+  `amount` double DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
