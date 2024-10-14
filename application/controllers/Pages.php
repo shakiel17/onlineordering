@@ -336,6 +336,33 @@
             $this->load->view('templates/admin/modal');        
             $this->load->view('templates/admin/footer');
         }
+        public function accept_booking($refno){
+            $save=$this->Ordering_model->accept_booking($refno);
+            if($save){
+                $this->session->set_flashdata('success','Booking successfully accepted!');
+            }else{
+                $this->session->set_flashdata('failed','Unable to save booking status!');
+            }
+            redirect(base_url().'manage_order');
+        }
+        public function cancel_booking($refno){
+            $save=$this->Ordering_model->cancel_booking($refno);
+            if($save){
+                $this->session->set_flashdata('success','Booking successfully cancelled!');
+            }else{
+                $this->session->set_flashdata('failed','Unable to cancel booking!');
+            }
+            redirect(base_url().'manage_order');
+        }
+        public function complete_booking($refno){
+            $save=$this->Ordering_model->complete_booking($refno);
+            if($save){
+                $this->session->set_flashdata('success','Booking successfully completed!');
+            }else{
+                $this->session->set_flashdata('failed','Unable to complete booking!');
+            }
+            redirect(base_url().'manage_order');
+        }
         //======================Admin Module===============================
     }
 ?>

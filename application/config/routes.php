@@ -65,6 +65,9 @@ $route['view_product_details/(:any)'] = 'pages/view_product_details/$1';
 $route['view_product_category/(:any)'] = 'pages/view_product_category/$1';
 //===========================User Route=========================
 //===========================Admin Routes=======================
+$route['complete_booking/(:any)'] = 'pages/complete_booking/$1';
+$route['cancel_booking/(:any)'] = 'pages/cancel_booking/$1';
+$route['accept_booking/(:any)'] = 'pages/accept_booking/$1';
 $route['manage_order'] = 'pages/manage_order';
 $route['view_product_image/(:any)'] = 'pages/view_product_image/$1';
 $route['save_product_image'] = 'pages/save_product_image';

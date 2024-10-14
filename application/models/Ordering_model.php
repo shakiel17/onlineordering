@@ -235,7 +235,7 @@
                 $image = $_FILES["file"]["tmp_name"];
                 $imgContent=addslashes(file_get_contents($image));                
                 foreach($id as $code){
-                    $result=$this->db->query("UPDATE cart SET trans_code='$refno',trantype='$type',book_date='$date',book_time='$time',attachment='$imgContent',amount='$amount' WHERE id='$code'");
+                    $result=$this->db->query("UPDATE cart SET trans_code='$refno',trantype='$type',attachment='$imgContent',amount='$amount' WHERE id='$code'");
                 }
             }else{
                 return false;
@@ -255,6 +255,101 @@
         public function getPendingOrders(){
             $result=$this->db->query("SELECT * FROM cart WHERE trans_code <> '' AND `status`='pending' GROUP BY trans_code");
             return $result->result_array();
+        }
+        public function accept_booking($refno){
+            $query=$this->db->query("SELECT * FROM cart WHERE trans_code='$refno'");
+            $res=$query->result_array();
+            $amount=0;            
+            foreach($res as $r){
+                $amount=$r['amount'];
+                $book_date=$r['book_date'];
+                $book_time=$r['book_time'];
+            }            
+            $date=date('Y-m-d');
+            $time=date('H:i:s');
+            $remarks="Payment";
+            $invno="INV".date('YmdHis');
+            $result=$this->db->query("INSERT INTO sales(trans_code,invoice,amount,datearray,timearray,remarks) VALUES('$refno','$invno','$amount','$date','$time','$remarks')");
+            if($result){
+                $result=$this->db->query("UPDATE cart SET `status`='booked',book_date='$date',book_time='$time' WHERE trans_code='$refno'");
+                if($result){
+                    foreach($res as $r){
+                        $result=$this->db->query("INSERT INTO stocktable(trans_code,code,unitcost,quantity,trantype,datearray,timearray) VALUES('$refno','$r[code]','$r[unitcost]','-$r[quantity]','sales','$date','$time')");
+                    }
+                    if($result){
+                        return true;
+                    }else{
+                        $this->db->query("UPDATE cart SET `status`='pending',book_date='$book_date',book_time='$book_time' WHERE trans_code='$refno'");
+                        return false;
+                    }
+                }else{
+                    $this->db->query("DELETE FROM sales WHERE trans_code='$refno' AND remarks='Payment'");
+                    return false;
+                }
+            }else{
+                return false;
+            }
+        }
+        public function cancel_booking($refno){
+            $date=date('Y-m-d');
+            $time=date('H:i:s');
+            $result=$this->db->query("UPDATE cart SET `status`='cancel',cancel_date='$date',cancel_time='$time' WHERE trans_code='$refno'");
+            if($result){
+                return true;
+            }else{
+                return false;
+            }
+        }
+        public function auto_cancel(){
+            $query=$this->db->query("SELECT * FROM cart WHERE `status`='booked' GROUP BY trans_code");
+            $result=$query->result_array();
+            foreach($result as $row){
+                $refno=$row['trans_code'];
+                $book_date=date_create($row['book_date']);
+                $date_now=date_create(date('Y-m-d'));
+                $diff=date_diff($book_date,$date_now);
+                $days=$diff->format("%a");
+                $amount=$row['amount'];
+                $ref_amount=$amount/2;
+                $date=date('Y-m-d');
+                $time=date('H:i:s');
+                $remarks="Refund";
+                if($days > 2){
+                    $this->db->query("INSERT INTO sales(trans_code,invoice,amount,datearray,timearray,remarks) VALUES('$refno','','-$ref_amount','$date','$time','$remarks')");
+                    $this->db->query("UPDATE cart SET `status`='cancel',cancel_date='$date',cancel_time='$time' WHERE trans_code='$refno'");
+                    $query=$this->db->query("SELECT * FROM cart WHERE trans_code='$refno'");
+                    $res=$query->result_array();
+                    foreach($res as $r){
+                        $result=$this->db->query("INSERT INTO stocktable(trans_code,code,unitcost,quantity,trantype,datearray,timearray) VALUES('$refno','$r[code]','$r[unitcost]','$r[quantity]','return','$date','$time')");
+                    }
+                }
+            }
+        }
+        public function complete_booking($refno){
+            $query=$this->db->query("SELECT * FROM cart WHERE trans_code='$refno'");
+            $res=$query->result_array();
+            $amount=0;            
+            $totalamount=0;
+            foreach($res as $r){
+                $amount=$r['amount'];
+                $book_date=$r['book_date'];
+                $book_time=$r['book_time'];
+                $totalamount += $r['unitcost']*$r['quantity'];
+            }            
+            $date=date('Y-m-d');
+            $time=date('H:i:s');
+            $remarks="Payment";
+            $invno="INV".date('YmdHis');
+            $rem_bal=$totalamount-$amount;
+            if($rem_bal > 0){
+                $result=$this->db->query("INSERT INTO sales(trans_code,invoice,amount,datearray,timearray,remarks) VALUES('$refno','$invno','$rem_bal','$date','$time','$remarks')");
+            }                        
+                $result=$this->db->query("UPDATE cart SET `status`='completed',pickup_date='$date',pickup_time='$time' WHERE trans_code='$refno'");
+                if($result){
+                    return true;
+                }else{                    
+                    return false;
+                }
         }
     }
 ?>
