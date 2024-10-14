@@ -50,6 +50,10 @@ CREATE TABLE `cart` (
   `timearray` time DEFAULT NULL,
   `book_date` date DEFAULT NULL,
   `book_time` time DEFAULT NULL,
+  `pickup_date` date DEFAULT NULL,
+  `pickup_time` time DEFAULT NULL,
+  `cancel_date` date DEFAULT NULL,
+  `cancel_time` time DEFAULT NULL,
   `attachment` longblob DEFAULT NULL,
   `amount` double DEFAULT NULL,
   PRIMARY KEY (`id`)
@@ -82,8 +86,9 @@ CREATE TABLE `sales` (
   `amount` double DEFAULT NULL,
   `datearray` date DEFAULT NULL,
   `timearray` time DEFAULT NULL,
+  `remarks` varchar(100) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 /*Table structure for table `stocks` */
 
@@ -119,7 +124,7 @@ CREATE TABLE `stocktable` (
   `datearray` date DEFAULT NULL,
   `timearray` time DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=22 DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
 /*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
