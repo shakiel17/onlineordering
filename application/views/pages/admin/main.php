@@ -63,7 +63,148 @@
                                 <h6 class="text-white">Total Sales</h6>
                             </div>
                         </div>
+                    </div>                                 
+                </div>   
+                <div class="row col-12">
+                    <div class="card col-4">
+                        <div class="card-body">
+                            <h5 class="card-title">Full Level</h5>
+                            <div class="table-responsive">
+                                <table
+                                id="full_level"
+                                class="table table-striped table-bordered"
+                                >
+                                <thead>
+                                    <tr>
+                                    <th>Description</th>                                                                        
+                                    <th width="10%">Quantity</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <?php
+                                    $query=$this->Ordering_model->getLevel();
+                                    foreach($query as $item){
+                                        $max=$item['max_level'];
+                                        $min=$item['critical_level'];
+                                        $soh=$item['soh'];
+                                        $mid=($max+$min)/2;
+                                        $full=($max+$mid)/2;
+                                        $half=($mid+$min)/2;
+                                        if($soh >= $full){
+                                        ?>
+                                        <tr>
+                                            <td><?=$item['description'];?></td>
+                                            <td align="center"><?=$item['soh'];?></td>                                    
+                                        </tr>                            
+                                        <?php
+                                        }
+                                    }
+                                    ?>                                    
+                                </tbody>
+                                <tfoot>
+                                <tr>
+                                    <th>Description</th>                                                                        
+                                    <th>Quantity</th>
+                                    </tr>
+                                </tfoot>
+                                </table>
+                            </div>
+                        </div> 
                     </div>
-                </div>                                               
+
+
+                    <div class="card col-4">
+                        <div class="card-body">
+                            <h5 class="card-title">Half Level</h5>
+                            <div class="table-responsive">
+                                <table
+                                id="half_level"
+                                class="table table-striped table-bordered"
+                                >
+                                <thead>
+                                    <tr>
+                                    <th>Description</th>                                                                        
+                                    <th width="10%">Quantity</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                <?php
+                                    $query=$this->Ordering_model->getLevel();
+                                    foreach($query as $item){
+                                        $max=$item['max_level'];
+                                        $min=$item['critical_level'];
+                                        $soh=$item['soh'];
+                                        $mid=($max+$min)/2;
+                                        $full=($max+$mid)/2;
+                                        $half=($mid+$min)/2;
+                                        if($soh < $full && $soh >= $min){
+                                        ?>
+                                        <tr>
+                                            <td><?=$item['description'];?></td>
+                                            <td align="center"><?=$item['soh'];?></td>                                    
+                                        </tr>                            
+                                        <?php
+                                        }
+                                    }
+                                    ?>                            
+                                </tbody>
+                                <tfoot>
+                                <tr>
+                                    <th>Description</th>                                                                        
+                                    <th>Quantity</th>
+                                    </tr>
+                                </tfoot>
+                                </table>
+                            </div>
+                        </div> 
+                    </div>
+                    
+                    <div class="card col-4">
+                        <div class="card-body">
+                            <h5 class="card-title">Critical Level</h5>
+                            <div class="table-responsive">
+                                <table
+                                id="critical_level"
+                                class="table table-striped table-bordered"
+                                >
+                                <thead>
+                                    <tr>
+                                    <th>Description</th>                                                                        
+                                    <th width="10%">Quantity</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                <?php
+                                    $query=$this->Ordering_model->getLevel();
+                                    foreach($query as $item){
+                                        $max=$item['max_level'];
+                                        $min=$item['critical_level'];
+                                        $soh=$item['soh'];
+                                        $mid=($max+$min)/2;
+                                        $full=($max+$mid)/2;
+                                        $half=($mid+$min)/2;
+                                        if($soh <= $min){
+                                        ?>
+                                        <tr>
+                                            <td><?=$item['description'];?></td>
+                                            <td align="center"><?=$item['soh'];?></td>                                    
+                                        </tr>                            
+                                        <?php
+                                        }
+                                    }
+                                    ?>                        
+                                </tbody>
+                                <tfoot>
+                                <tr>
+                                    <th>Description</th>                                                                        
+                                    <th>Quantity</th>
+                                    </tr>
+                                </tfoot>
+                                </table>
+                            </div>
+                        </div> 
+                    </div>
+                </div>
+                
             </div>          
         </div>

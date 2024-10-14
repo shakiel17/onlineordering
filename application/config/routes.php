@@ -50,6 +50,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 |		my-controller/my-method	-> my_controller/my_method
 */
 //===========================User Route=========================
+$route['update_profile'] = 'pages/update_profile';
+$route['user_profile'] = 'pages/user_profile';
 $route['purchase_history'] = 'pages/purchase_history';
 $route['view_invoice/(:any)'] = 'pages/view_invoice/$1';
 $route['checkout'] = 'pages/checkout';
@@ -65,6 +67,10 @@ $route['view_product_details/(:any)'] = 'pages/view_product_details/$1';
 $route['view_product_category/(:any)'] = 'pages/view_product_category/$1';
 //===========================User Route=========================
 //===========================Admin Routes=======================
+$route['monthly_sales'] = 'pages/monthly_sales';
+$route['weekly_sales'] = 'pages/weekly_sales';
+$route['daily_sales'] = 'pages/daily_sales';
+$route['manage_report'] = 'pages/manage_report';
 $route['complete_booking/(:any)'] = 'pages/complete_booking/$1';
 $route['cancel_booking/(:any)'] = 'pages/cancel_booking/$1';
 $route['accept_booking/(:any)'] = 'pages/accept_booking/$1';

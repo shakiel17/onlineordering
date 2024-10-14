@@ -351,5 +351,36 @@
                     return false;
                 }
         }
+        public function getUserProfile(){
+            $username=$this->session->username;
+            $result=$this->db->query("SELECT * FROM customer WHERE username='$username'");
+            return $result->row_array();
+        }
+        public function update_profile(){
+            $fullname=$this->input->post('fullname');
+            $address=$this->input->post('address');
+            $contactno=$this->input->post('contactno');
+            $username=$this->input->post('username');
+            $password=$this->input->post('password');
+            $result=$this->db->query("UPDATE customer SET fullname='$fullname',`address`='$address',contactno='$contactno',`password`='$password' WHERE username='$username'");
+            if($result){
+                return true;
+            }else{
+                return false;
+            }
+        }
+        public function getLevel(){
+            $result=$this->db->query("SELECT SUM(s.quantity) as soh,r.description,r.critical_level,r.max_level FROM stocktable s INNER JOIN stocks r ON s.code=r.code GROUP BY s.code");
+            return $result->result_array();
+        }
+        public function getDailySales($rundate){
+            $result=$this->db->query("SELECT s.trans_code,c.firstname,st.description,c.quantity,c.unitcost FROM sales s INNER JOIN cart c ON c.trans_code=s.trans_code INNER JOIN stocks st ON st.code=c.code WHERE s.datearray='$rundate' AND c.status <> 'cancel' GROUP BY c.code");
+            return $result->result_array();
+        }
+
+        public function getWeeklySales($startdate,$enddate){
+            $result=$this->db->query("SELECT s.trans_code,c.firstname,st.description,c.quantity,c.unitcost FROM sales s INNER JOIN cart c ON c.trans_code=s.trans_code INNER JOIN stocks st ON st.code=c.code WHERE s.datearray BETWEEN '$startdate' AND '$enddate' AND c.status <> 'cancel' GROUP BY c.code");
+            return $result->result_array();
+        }
     }
 ?>

@@ -199,6 +199,33 @@
             $this->load->view('templates/user/modal');        
             $this->load->view('templates/user/footer');
         }
+        public function user_profile(){
+            $page = "user_profile";
+            if(!file_exists(APPPATH.'views/pages/'.$page.".php")){
+                show_404();
+            }
+            $data['title'] = "My Profile";
+            $data['category'] = $this->Ordering_model->getAllProductsByCategory();
+            $data['item'] = $this->Ordering_model->getUserProfile();
+            $this->load->view('templates/header');
+            $this->load->view('templates/user/navbar');
+            $this->load->view('templates/user/sidebar',$data);
+            $this->load->view('pages/'.$page,$data);    
+            $this->load->view('templates/user/modal');        
+            $this->load->view('templates/user/footer');
+        }
+
+        public function update_profile(){
+            $fullname=$this->input->post('fullname');
+            $update=$this->Ordering_model->update_profile();
+            if($update){
+                $this->session->set_flashdata('success','Profile successfully updated!');
+                $this->session->set_userdata('fullname',$fullname);
+            }else{
+                $this->session->set_flashdata('failed','Unable to update profile!');
+            }
+            redirect(base_url()."user_profile");
+        }
         //======================User Module===============================
 
         //======================Admin Module===============================
@@ -362,6 +389,104 @@
                 $this->session->set_flashdata('failed','Unable to complete booking!');
             }
             redirect(base_url().'manage_order');
+        }
+
+        public function manage_report(){
+            $page = "reports";
+            if(!file_exists(APPPATH.'views/pages/admin/'.$page.".php")){
+                show_404();
+            }
+
+            if($this->session->admin_login){
+
+            }else{
+                $this->session->set_flashdata('failed','You are not logged in! Please login.');
+                redirect(base_url()."admin");
+            }            
+            $data['title'] = 'Reports';
+            $data['pending'] = $this->Ordering_model->getPendingOrders();
+            $this->load->view('templates/header');
+            $this->load->view('templates/admin/navbar',$data);
+            $this->load->view('templates/admin/sidebar');
+            $this->load->view('pages/admin/'.$page,$data);    
+            $this->load->view('templates/admin/modal');        
+            $this->load->view('templates/admin/footer');
+        }
+        public function daily_sales(){
+            $page = "daily_sales";
+            if(!file_exists(APPPATH.'views/pages/admin/'.$page.".php")){
+                show_404();
+            }
+
+            if($this->session->admin_login){
+
+            }else{
+                $this->session->set_flashdata('failed','You are not logged in! Please login.');
+                redirect(base_url()."admin");
+            }            
+            $rundate=$this->input->post('rundate');
+            $data['title'] = 'Daily Sales Report';
+            $data['rundate'] = $rundate;
+            $data['pending'] = $this->Ordering_model->getPendingOrders();
+            $data['items'] = $this->Ordering_model->getDailySales($rundate);
+            $this->load->view('templates/header');
+            $this->load->view('templates/admin/navbar',$data);
+            $this->load->view('templates/admin/sidebar');
+            $this->load->view('pages/admin/'.$page,$data);    
+            $this->load->view('templates/admin/modal');        
+            $this->load->view('templates/admin/footer');
+        }
+        public function weekly_sales(){
+            $page = "weekly_sales";
+            if(!file_exists(APPPATH.'views/pages/admin/'.$page.".php")){
+                show_404();
+            }
+
+            if($this->session->admin_login){
+
+            }else{
+                $this->session->set_flashdata('failed','You are not logged in! Please login.');
+                redirect(base_url()."admin");
+            }            
+            $startdate=$this->input->post('startdate');
+            $enddate=$this->input->post('enddate');
+            $data['title'] = 'Weekly Sales Report';
+            $data['startdate'] = $startdate;
+            $data['enddate'] = $enddate;
+            $data['pending'] = $this->Ordering_model->getPendingOrders();
+            $data['items'] = $this->Ordering_model->getWeeklySales($startdate,$enddate);
+            $this->load->view('templates/header');
+            $this->load->view('templates/admin/navbar',$data);
+            $this->load->view('templates/admin/sidebar');
+            $this->load->view('pages/admin/'.$page,$data);    
+            $this->load->view('templates/admin/modal');        
+            $this->load->view('templates/admin/footer');
+        }
+        public function monthly_sales(){
+            $page = "monthly_sales";
+            if(!file_exists(APPPATH.'views/pages/admin/'.$page.".php")){
+                show_404();
+            }
+
+            if($this->session->admin_login){
+
+            }else{
+                $this->session->set_flashdata('failed','You are not logged in! Please login.');
+                redirect(base_url()."admin");
+            }            
+            $startdate=$this->input->post('startdate');
+            $enddate=$this->input->post('enddate');
+            $data['title'] = 'Monhtly Sales Report';
+            $data['startdate'] = $startdate;
+            $data['enddate'] = $enddate;
+            $data['pending'] = $this->Ordering_model->getPendingOrders();
+            $data['items'] = $this->Ordering_model->getWeeklySales($startdate,$enddate);
+            $this->load->view('templates/header');
+            $this->load->view('templates/admin/navbar',$data);
+            $this->load->view('templates/admin/sidebar');
+            $this->load->view('pages/admin/'.$page,$data);    
+            $this->load->view('templates/admin/modal');        
+            $this->load->view('templates/admin/footer');
         }
         //======================Admin Module===============================
     }

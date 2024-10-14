@@ -36,7 +36,7 @@
                     <?php
                     foreach($search_result as $item){
                         $q=$this->Ordering_model->getQuantity($item['code']);
-                        $quantity=$q['quantity'];
+                        $quantity=$q['quantity'];                        
                     ?>
                     <div class="col-lg-3 col-md-6">
                         <div class="card">
@@ -45,12 +45,24 @@
                                     <div class="el-overlay">
                                         <ul class="list-style-none el-info">
                                             <li class="el-item"><a class="btn default btn-outline image-popup-vertical-fit el-link" href="data:image/jpg;charset=utf8;base64,<?=base64_encode($item['img']);?>"><i class="mdi mdi-magnify-plus"></i></a></li>
-                                            <li class="el-item"><a class="btn default btn-outline el-link addtocart" href="#" data-toggle="modal" data-target="#AddtoCart" data-id="<?=$item['code'];?>"><i class="mdi mdi-cart"></i></a></li>
+                                            <?php
+                                            if($item['status']=="enable"){
+                                                $rem="available";
+                                                ?>
+                                                <li class="el-item"><a class="btn default btn-outline el-link addtocart" href="#" data-toggle="modal" data-target="#AddtoCart" data-id="<?=$item['code'];?>"><i class="mdi mdi-cart"></i></a></li>
+                                                <?php
+                                            }else{
+                                                $rem="unavailable";
+                                                ?>
+                                                <li class="el-item"><a class="btn default btn-outline el-link addtocart" href="#" style="cursor: not-allowed;"><i class="mdi mdi-cart"></i></a></li>
+                                                <?php
+                                            }
+                                            ?>                                            
                                         </ul>
                                     </div>
                                 </div>
                                 <div class="el-card-content">
-                                    <h4 class="m-b-0"><?=$item['description'];?></h4> <span><b>P <?=number_format($item['sellingprice'],2);?></b></span><br><span class="text-muted">Stocks: <?=$quantity;?></span>
+                                    <h4 class="m-b-0"><?=$item['description'];?></h4> <span><b>P <?=number_format($item['sellingprice'],2);?></b></span><br><span class="text-muted">Stocks: <?=$quantity;?><br><font color="red"><?=$rem;?></font></span>
                                 </div>
                             </div>
                         </div>
@@ -80,6 +92,11 @@
                                         foreach($query as $row){
                                             $q=$this->Ordering_model->getQuantity($item['code']);
                                             $quantity=$q['quantity'];
+                                            if($row['status']=="enable"){
+                                                $av="";
+                                            }else{
+                                                $av="style='cursor: not-allowed;'";
+                                            }
                                         ?>                                        
                                             <div class="col-lg-2 col-md-6">
                                                 <div class="card">
@@ -88,12 +105,24 @@
                                                             <div class="el-overlay">
                                                                 <ul class="list-style-none el-info">
                                                                     <li class="el-item"><a class="btn default btn-outline image-popup-vertical-fit el-link" href="data:image/jpg;charset=utf8;base64,<?=base64_encode($row['img']);?>"><i class="mdi mdi-magnify-plus"></i></a></li>
-                                                                    <li class="el-item"><a class="btn default btn-outline el-link addtocart" href="#" data-toggle="modal" data-target="#AddtoCart" data-id="<?=$item['code'];?>"><i class="mdi mdi-cart"></i></a></li>
+                                                                    <?php
+                                                                    if($item['status']=="enable"){
+                                                                        $rem="available";
+                                                                        ?>
+                                                                        <li class="el-item"><a class="btn default btn-outline el-link addtocart" href="#" data-toggle="modal" data-target="#AddtoCart" data-id="<?=$item['code'];?>"><i class="mdi mdi-cart"></i></a></li>
+                                                                        <?php
+                                                                    }else{
+                                                                        $rem="unavailable";
+                                                                        ?>
+                                                                        <li class="el-item"><a class="btn default btn-outline el-link addtocart" href="#" style="cursor: not-allowed;"><i class="mdi mdi-cart"></i></a></li>
+                                                                        <?php
+                                                                    }
+                                                                    ?> 
                                                                 </ul>
                                                             </div>
                                                         </div>
                                                         <div class="el-card-content">
-                                                            <h4 class="m-b-0"><?=$row['description'];?></h4> <span class="text-muted">P <?=number_format($row['sellingprice'],2);?></span><br><span class="text-muted">Stocks: <?=$quantity;?></span>
+                                                            <h4 class="m-b-0"><?=$row['description'];?></h4> <span class="text-muted">P <?=number_format($row['sellingprice'],2);?></span><br><span class="text-muted">Stocks: <?=$quantity;?><br><font color="red"><?=$rem;?></font></span>
                                                         </div>
                                                     </div>
                                                 </div>

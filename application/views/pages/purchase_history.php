@@ -42,6 +42,7 @@
                     <th scope="col">Referrence #</th>
                       <th scope="col">Items</th>                      
                       <th scope="col">Total Amount</th>
+                      <th scope="col">Status</th>
                       <th scope="col" width="20%">Actions</th>
                     </tr>
                   </thead>
@@ -66,6 +67,7 @@
                         ?>
                       </td>                      
                       <td align="right"><?=number_format($total,2);?></td>
+                      <td align="right"><?=$item['status'];?></td>
                       <td>                        
                         <a
                           href="<?=base_url();?>view_invoice/<?=$item['trans_code'];?>"
@@ -89,7 +91,7 @@
                   </tbody>
                   <tfoot>
                     <tr>
-                        <td colspan="4" align="right"></td>                                            
+                        <td colspan="5" align="right"></td>                                            
                     </tr>
                 </tfoot>
                 </table>

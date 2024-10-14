@@ -56,6 +56,7 @@
                                                 <th>Unit Cost</th>
                                                 <th>Selling Price</th>
                                                 <th>Quantity</th>
+                                                <th>Status</th>
                                                 <th width="15%">Action</th>
                                             </tr>
                                         </thead>
@@ -70,6 +71,11 @@
                                                 }else{
                                                     $image="<a href='#' data-toggle='modal' data-target='#manageProductImage' data-id='$item[id]' class='addProductImage'><img src='data:image/jpg;charset=utf8;base64,".base64_encode($item['img'])."' width='70'></a><br><a href='".base_url()."view_product_image/$item[id]' target='_blank'>View Image</a>";
                                                 }
+                                                if($item['status']=="enable"){
+                                                    $stat="available";
+                                                }else{
+                                                    $stat="unavailable";
+                                                }
                                                 echo "<tr>";
                                                     echo "<td>$x.</td>";
                                                     echo "<td align='center'>$image</td>";
@@ -78,6 +84,7 @@
                                                     echo "<td align='right'>".number_format($item['unitcost'],2)."</td>";
                                                     echo "<td align='right'>".number_format($item['sellingprice'],2)."</td>";
                                                     echo "<td align='center'>$quantity</td>";
+                                                    echo "<td align='center'>$stat</td>";
                                                     ?>
                                                     <td>
                                                         <a href="#" class="btn btn-warning btn-sm editProduct" data-toggle="modal" data-target="#ManageProduct" data-id="<?=$item['id'];?>_<?=$item['description'];?>_<?=$item['prodtype'];?>_<?=$item['unitcost'];?>_<?=$item['sellingprice'];?>_<?=$item['status'];?>_<?=$item['max_level'];?>_<?=$item['critical_level'];?>">Edit</a>
