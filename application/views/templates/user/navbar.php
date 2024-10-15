@@ -92,8 +92,14 @@
                             <a href="<?=base_url();?>manage_cart" class="nav-link dropdown-toggle waves-effect waves-dark" id="2"  aria-haspopup="true" aria-expanded="false"> <i class="font-24 mdi mdi-cart"></i>                            
                             <?php
                             $cart=$this->Ordering_model->getAllItemCart($this->session->username,"pending","");
+                            $book=$this->Ordering_model->getAllBookItemCart($this->session->username);
                             ?>
                             <span class="badge badge-danger"><?=count($cart);?></span>
+                            </a>
+                                </li>
+                                <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle waves-effect waves-dark" href="<?=base_url();?>purchase_history" id="2" aria-haspopup="true" aria-expanded="false"> <i class="font-24 mdi mdi-comment-processing"></i>
+                            <span class="badge badge-danger"><?=count($book);?></span>
                             </a>                                                        
                             <!-- <div class="dropdown-menu dropdown-menu-right mailbox animated bounceInDown" aria-labelledby="2">
                                 <ul class="list-style-none">

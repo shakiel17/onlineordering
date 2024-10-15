@@ -226,6 +226,15 @@
             }
             redirect(base_url()."user_profile");
         }
+
+        public function cancel_user_booking($refno,$status){            
+            $update=$this->Ordering_model->cancel_user_booking($refno,$status);
+            if($update){
+                echo "<script>alert('Booking successfully cancelled!');window.location='".base_url()."purchase_history';</script>";
+            }else{
+                echo "<script>alert('Unable to cancel booking!');window.location='".base_url()."purchase_history';</script>";
+            }            
+        }
         //======================User Module===============================
 
         //======================Admin Module===============================

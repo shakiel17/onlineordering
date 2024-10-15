@@ -50,6 +50,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 |		my-controller/my-method	-> my_controller/my_method
 */
 //===========================User Route=========================
+$route['cancel_user_booking/(:any)/(:any)'] = 'pages/cancel_user_booking/$1/$2';
 $route['update_profile'] = 'pages/update_profile';
 $route['user_profile'] = 'pages/user_profile';
 $route['purchase_history'] = 'pages/purchase_history';

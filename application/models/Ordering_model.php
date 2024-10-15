@@ -201,6 +201,10 @@
             $result=$this->db->query("SELECT * FROM cart WHERE username='$username' AND `status`='$status' AND trans_code='$transcode'");
             return $result->result_array();
         }
+        public function getAllBookItemCart($username){
+            $result=$this->db->query("SELECT * FROM cart WHERE username='$username' AND `status`='booked'");
+            return $result->result_array();
+        }
         public function getAllItemCartInvoice($username,$transcode){
             $result=$this->db->query("SELECT * FROM cart WHERE trans_code='$transcode'");
             return $result->result_array();
@@ -374,13 +378,47 @@
             return $result->result_array();
         }
         public function getDailySales($rundate){
-            $result=$this->db->query("SELECT s.trans_code,c.firstname,st.description,c.quantity,c.unitcost FROM sales s INNER JOIN cart c ON c.trans_code=s.trans_code INNER JOIN stocks st ON st.code=c.code WHERE s.datearray='$rundate' AND c.status <> 'cancel' GROUP BY c.code");
+            $result=$this->db->query("SELECT s.trans_code,c.firstname,st.description,c.quantity,c.unitcost FROM sales s INNER JOIN cart c ON c.trans_code=s.trans_code INNER JOIN stocks st ON st.code=c.code WHERE s.datearray='$rundate' GROUP BY c.code");
             return $result->result_array();
         }
 
         public function getWeeklySales($startdate,$enddate){
-            $result=$this->db->query("SELECT s.trans_code,c.firstname,st.description,c.quantity,c.unitcost FROM sales s INNER JOIN cart c ON c.trans_code=s.trans_code INNER JOIN stocks st ON st.code=c.code WHERE s.datearray BETWEEN '$startdate' AND '$enddate' AND c.status <> 'cancel' GROUP BY c.code");
+            $result=$this->db->query("SELECT s.trans_code,c.firstname,st.description,c.quantity,c.unitcost FROM sales s INNER JOIN cart c ON c.trans_code=s.trans_code INNER JOIN stocks st ON st.code=c.code WHERE s.datearray BETWEEN '$startdate' AND '$enddate' GROUP BY c.code");
             return $result->result_array();
+        }
+
+        public function cancel_user_booking($refno,$status){
+            $date=date('Y-m-d');
+            $time=date('H:i:s');
+            if($status=="pending"){                
+                $result=$this->db->query("UPDATE cart SET `status`='cancel',cancel_date='$date',cancel_time='$time' WHERE trans_code='$refno'");                
+            }else{
+                $query=$this->db->query("SELECT * FROM cart WHERE trans_code='$refno' GROUP BY trans_code");
+                $row=$query->row_array();
+                //foreach($result as $row){                    
+                    // $book_date=date_create($row['book_date']);
+                    // $date_now=date_create(date('Y-m-d'));
+                    // $diff=date_diff($book_date,$date_now);
+                    // $days=$diff->format("%a");
+                    $amount=$row['amount'];
+                    $ref_amount=$amount/2;                    
+                    $remarks="Refund";
+                    //if($days > 2){
+                        $this->db->query("INSERT INTO sales(trans_code,invoice,amount,datearray,timearray,remarks) VALUES('$refno','','-$ref_amount','$date','$time','$remarks')");
+                        $this->db->query("UPDATE cart SET `status`='cancel',cancel_date='$date',cancel_time='$time' WHERE trans_code='$refno'");
+                        $query=$this->db->query("SELECT * FROM cart WHERE trans_code='$refno'");
+                        $res=$query->result_array();
+                        foreach($res as $r){
+                            $result=$this->db->query("INSERT INTO stocktable(trans_code,code,unitcost,quantity,trantype,datearray,timearray) VALUES('$refno','$r[code]','$r[unitcost]','$r[quantity]','return','$date','$time')");
+                        }
+                   // }
+                //}
+            }
+            if($result){
+                return true;
+            }else{
+                return false;
+            }
         }
     }
 ?>

@@ -83,7 +83,7 @@
                         <p>Sub - Total amount: <?=number_format($totalamount,2);?></p>
                         <p>Refund: <?=number_format($refund,2);?></p>                     
                       <hr />
-                      <h3><b>Total Sales:</b> <?=number_format($totalamount-$refund,2);?></h3>
+                      <h3><b>Total Sales:</b> <?=number_format($totalamount-abs($refund),2);?></h3>
                     </div>
                     <div class="clearfix"></div>
                     <hr />

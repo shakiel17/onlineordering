@@ -47,11 +47,16 @@
                     </tr>
                   </thead>
                   <tbody>
-                    <?php
+                    <?php                    
                     $totalamount=0;
                     foreach($items as $item){
                         $query=$this->Ordering_model->db->query("SELECT s.description,c.unitcost,c.quantity FROM stocks s INNER JOIN cart c ON c.code=s.code WHERE c.trans_code='$item[trans_code]'");
                         $desc=$query->result_array();
+                        if($item['status'] == "completed" || $item['status']=="cancel"){
+                          $view="style='display:none;'";
+                        }else{
+                          $view="";  
+                        }
                     ?>
                     <tr>    
                       <td>
@@ -77,16 +82,11 @@
                           <i class="mdi mdi-eye"></i>
                           View Invoice
                         </a>
+                        <a href="<?=base_url();?>cancel_user_booking/<?=$item['trans_code'];?>/<?=$item['status'];?>" class="btn btn-danger" <?=$view;?> onclick="return confirm('Do you wish to cancel this booking?'); return false;">Cancel</a>
                       </td>
                     </tr>
-                    <?php
-                    $totalamount += $item['unitcost']*$item['quantity'];
-                    }
-                    if(count($items) > 0){
-                        $view="";
-                    }else{
-                        $view="style='display:none;'";
-                    }
+                    <?php                    
+                    }                    
                     ?>
                   </tbody>
                   <tfoot>

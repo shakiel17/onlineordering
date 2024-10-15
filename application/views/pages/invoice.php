@@ -36,7 +36,7 @@
           $address="";
           $fullname="";
           foreach($items as $row){
-            if($row['book_date'] <> "0000-00-00"){
+            if($row['book_date'] <> "0000-00-00" && $row['book_date'] <> ""){
               $book_date=date('dS M Y',strtotime($row['book_date']));            
               $book_due=date('dS M Y',strtotime('2 days',strtotime($row['book_date']))); 
             }else{
