@@ -170,7 +170,7 @@
             $contactno=$user['contactno'];
             $query=$this->db->query("SELECT * FROM stocks WHERE code='$id'");
             $item=$query->row_array();
-            $unitcost=$item['unitcost'];
+            $unitcost=$item['sellingprice'];
             $query=$this->db->query("SELECT SUM(quantity) as soh FROM stocktable WHERE code='$id' GROUP BY code");
             $row=$query->row_array();
             $soh=$row['soh'];
@@ -419,6 +419,39 @@
             }else{
                 return false;
             }
+        }
+        public function getAllDisposalByStatus($status){
+            $result=$this->db->query("SELECT * FROM disposal WHERE `status`='$status' GROUP BY refno ORDER BY datearray ASC");
+            return $result->result_array();
+        }
+        public function getAllDisposalByRefNo($refno,$status){
+            $result=$this->db->query("SELECT * FROM disposal WHERE refno='$refno' AND `status`='$status'");
+            return $result->result_array();
+        }
+
+        public function add_to_disposal($refno,$code,$quantity){
+            $query=$this->db->query("SELECT * FROM stocks WHERE code='$code'");
+            $res=$query->row_array();
+            $description=$res['description'];
+            $unitcost=$res['unitcost'];
+            $date=date('Y-m-d');
+            $time=date('H:i:s');
+            $check=$this->db->query("SELECT * FROM disposal WHERE refno='$refno' AND code='$code' AND `status`='pending'");
+            if($check->num_rows()>0){
+                $row=$check->row_array();
+                $qty=$row['quantity'];
+                $tqty=$qty+$quantity;
+                $id=$row['id'];
+                $result=$this->db->query("UPDATE disposal SET quantity='$tqty' WHERE id='$id'");
+            }else{
+                $result=$this->db->query("INSERT INTO disposal(refno,code,`description`,quantity,unitcost,datearray,timearray) VALUES('$refno','$code','$description','$quantity','$unitcost','$date','$time')");
+            }
+            if($result){
+                return true;
+            }else{
+                return false;
+            }
+            
         }
     }
 ?>

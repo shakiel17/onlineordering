@@ -68,6 +68,11 @@ $route['view_product_details/(:any)'] = 'pages/view_product_details/$1';
 $route['view_product_category/(:any)'] = 'pages/view_product_category/$1';
 //===========================User Route=========================
 //===========================Admin Routes=======================
+$route['add_to_disposal'] = 'pages/add_to_disposal';
+$route['disposal_manager'] = 'pages/disposal_manager';
+$route['edit_disposal/(:any)'] = 'pages/edit_disposal/$1';
+$route['new_disposal'] = 'pages/new_disposal';
+$route['manage_disposal'] = 'pages/manage_disposal';
 $route['monthly_sales'] = 'pages/monthly_sales';
 $route['weekly_sales'] = 'pages/weekly_sales';
 $route['daily_sales'] = 'pages/daily_sales';

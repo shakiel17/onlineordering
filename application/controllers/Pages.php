@@ -497,6 +497,77 @@
             $this->load->view('templates/admin/modal');        
             $this->load->view('templates/admin/footer');
         }
+        public function manage_disposal(){
+            $page = "manage_disposal";
+            if(!file_exists(APPPATH.'views/pages/admin/'.$page.".php")){
+                show_404();
+            }
+
+            if($this->session->admin_login){
+
+            }else{
+                $this->session->set_flashdata('failed','You are not logged in! Please login.');
+                redirect(base_url()."admin");
+            }                        
+            $this->session->unset_userdata('refno');
+            $data['title'] = 'Item Disposal Manager';            
+            $data['pending'] = $this->Ordering_model->getPendingOrders();
+            $data['items'] = $this->Ordering_model->getAllDisposalByStatus("pending");
+            $this->load->view('templates/header');
+            $this->load->view('templates/admin/navbar',$data);
+            $this->load->view('templates/admin/sidebar');
+            $this->load->view('pages/admin/'.$page,$data);    
+            $this->load->view('templates/admin/modal');        
+            $this->load->view('templates/admin/footer');
+        }
+        public function new_disposal(){
+            $refno=date('YmdHis');
+            $this->session->set_userdata('refno',$refno);
+            redirect(base_url()."disposal_manager");
+        }
+        public function edit_disposal($refno){            
+            $this->session->set_userdata('refno',$refno);
+            redirect(base_url()."disposal_manager");
+        }
+        public function disposal_manager(){
+            $page = "disposal_manager";
+            if(!file_exists(APPPATH.'views/pages/admin/'.$page.".php")){
+                show_404();
+            }
+
+            if($this->session->admin_login){
+
+            }else{
+                $this->session->set_flashdata('failed','You are not logged in! Please login.');
+                redirect(base_url()."admin");
+            }                                    
+            $refno=$this->session->refno;
+            $data['title'] = 'Item Disposal Manager';            
+            $data['pending'] = $this->Ordering_model->getPendingOrders();
+            $data['items'] = $this->Ordering_model->getAllDisposalByRefNo($refno,"pending");
+            $data['products'] = $this->Ordering_model->getAllProducts();
+            $data['refno'] = $refno;
+            $this->load->view('templates/header');
+            $this->load->view('templates/admin/navbar',$data);
+            $this->load->view('templates/admin/sidebar');
+            $this->load->view('pages/admin/'.$page,$data);    
+            $this->load->view('templates/admin/modal');        
+            $this->load->view('templates/admin/footer');
+        }
+        public function add_to_disposal(){
+            $refno=$this->input->post('refno');
+            $code=$this->input->post('code');
+            $quantity=$this->input->post('quantity');
+            foreach($code as $id){
+                $save=$this->Ordering_model->add_to_disposal($refno,$id,$quantity);
+            }            
+            if($save){
+                $this->session->set_flashdata('success','Item successfully added!');
+            }else{
+                $this->session->set_flashdata('failed','Unable to add item!');
+            }
+            redirect(base_url().'disposal_manager');
+        }
         //======================Admin Module===============================
     }
 ?>

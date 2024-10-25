@@ -60,10 +60,9 @@
                           &nbsp;<b class="text-danger">AJ CONSTRUCTION SUPPLIES</b>
                         </h3>
                         <p class="text-muted ms-1">
-                          E 104, Dharti-2, <br />
-                          Nr' Viswakarma Temple, <br />
-                          Talaja Road, <br />
-                          Bhavnagar - 364002
+                          Purok 4, Baroy Street <br />
+                          Lanao, Kidapawan City <br />                          
+                          9400
                         </p>
                       </address>
                     </div>
