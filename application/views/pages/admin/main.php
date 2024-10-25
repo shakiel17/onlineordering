@@ -27,42 +27,39 @@
                 <!-- ============================================================== -->
                 <!-- Start Page Content -->
                 <!-- ============================================================== -->
-                <div class="row">
+                <div class="row">                    
                     <!-- Column -->
-                    <div class="col-md-6 col-lg-3">
-                        <div class="card card-hover">
-                            <div class="box bg-cyan text-center">
-                                <h1 class="font-light text-white"><i class="mdi mdi-view-dashboard"></i></h1>
-                                <h6 class="text-white">Registered User</h6>
+                    <div class="col-md-6 col-lg-4">
+                        <a href="<?=base_url();?>manage_product">
+                            <div class="card card-hover">
+                                <div class="box bg-success text-center">
+                                    <h1 class="font-light text-white"><i class="mdi mdi-chart-areaspline"></i></h1>
+                                    <h6 class="text-white">Products</h6>
+                                </div>
                             </div>
-                        </div>
-                    </div>
-                    <!-- Column -->
-                    <div class="col-md-6 col-lg-3">
-                        <div class="card card-hover">
-                            <div class="box bg-success text-center">
-                                <h1 class="font-light text-white"><i class="mdi mdi-chart-areaspline"></i></h1>
-                                <h6 class="text-white">Products</h6>
-                            </div>
-                        </div>
+                        </a>
                     </div>
                      <!-- Column -->
-                    <div class="col-md-6 col-lg-3">
-                        <div class="card card-hover">
-                            <div class="box bg-warning text-center">
-                                <h1 class="font-light text-white"><i class="mdi mdi-collage"></i></h1>
-                                <h6 class="text-white">Pending Orders</h6>
+                    <div class="col-md-6 col-lg-4">
+                        <a href="<?=base_url();?>manage_order">
+                            <div class="card card-hover">
+                                <div class="box bg-warning text-center">
+                                    <h1 class="font-light text-white"><i class="mdi mdi-collage"></i></h1>
+                                    <h6 class="text-white">Pending Orders</h6>
+                                </div>
                             </div>
-                        </div>
+                        </a>
                     </div>
                     <!-- Column -->
-                    <div class="col-md-6 col-lg-3">
-                        <div class="card card-hover">
-                            <div class="box bg-danger text-center">
-                                <h1 class="font-light text-white"><i class="mdi mdi-border-outside"></i></h1>
-                                <h6 class="text-white">Total Sales</h6>
+                    <div class="col-md-6 col-lg-4">
+                        <a href="<?=base_url();?>manage_report">
+                            <div class="card card-hover">
+                                <div class="box bg-danger text-center">
+                                    <h1 class="font-light text-white"><i class="mdi mdi-border-outside"></i></h1>
+                                    <h6 class="text-white">Total Sales</h6>
+                                </div>
                             </div>
-                        </div>
+                        </a>
                     </div>                                 
                 </div>   
                 <div class="row col-12">

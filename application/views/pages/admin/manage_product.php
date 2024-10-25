@@ -99,14 +99,15 @@
                                         </tbody>
                                         <tfoot>
                                         <tr>
-                                                <th>No.</th>
+                                        <th>No.</th>
                                                 <th>Img</th>
                                                 <th>Description</th>
                                                 <th>Category</th>
                                                 <th>Unit Cost</th>
                                                 <th>Selling Price</th>
                                                 <th>Quantity</th>
-                                                <th>Action</th>
+                                                <th>Status</th>
+                                                <th width="15%">Action</th>
                                             </tr>
                                         </tfoot>
                                     </table>
