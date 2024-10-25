@@ -568,6 +568,76 @@
             }
             redirect(base_url().'disposal_manager');
         }
+        public function remove_from_disposal($id){            
+            $save=$this->Ordering_model->remove_from_disposal($id);            
+            if($save){
+                $this->session->set_flashdata('success','Item successfully removed!');
+            }else{
+                $this->session->set_flashdata('failed','Unable to remove item!');
+            }
+            redirect(base_url().'disposal_manager');
+        }
+        public function post_disposal(){            
+            $save=$this->Ordering_model->post_disposal();  
+            if($save){
+                $this->session->set_flashdata('success','Tramsaction successfully posted!');
+            }else{
+                $this->session->set_flashdata('failed','Unable to post transaction!');
+            }
+            redirect(base_url().'manage_disposal');
+        }
+        public function monthly_disposal(){
+            $page = "monthly_disposal";
+            if(!file_exists(APPPATH.'views/pages/admin/'.$page.".php")){
+                show_404();
+            }
+
+            if($this->session->admin_login){
+
+            }else{
+                $this->session->set_flashdata('failed','You are not logged in! Please login.');
+                redirect(base_url()."admin");
+            }            
+            $startdate=$this->input->post('startdate');
+            $enddate=$this->input->post('enddate');
+            $data['title'] = 'Monhtly Disposal Report';
+            $data['startdate'] = $startdate;
+            $data['enddate'] = $enddate;
+            $data['pending'] = $this->Ordering_model->getPendingOrders();
+            $data['items'] = $this->Ordering_model->getMonthlyDisposal($startdate,$enddate);
+            $this->load->view('templates/header');
+            $this->load->view('templates/admin/navbar',$data);
+            $this->load->view('templates/admin/sidebar');
+            $this->load->view('pages/admin/'.$page,$data);    
+            $this->load->view('templates/admin/modal');        
+            $this->load->view('templates/admin/footer');
+        }
+        public function monthly_manufacture(){
+            $page = "monthly_manufacture";
+            if(!file_exists(APPPATH.'views/pages/admin/'.$page.".php")){
+                show_404();
+            }
+
+            if($this->session->admin_login){
+
+            }else{
+                $this->session->set_flashdata('failed','You are not logged in! Please login.');
+                redirect(base_url()."admin");
+            }            
+            $startdate=$this->input->post('startdate');
+            $enddate=$this->input->post('enddate');
+            $data['title'] = 'Monhtly Manufacture Report';
+            $data['startdate'] = $startdate;
+            $data['enddate'] = $enddate;
+            $data['pending'] = $this->Ordering_model->getPendingOrders();
+            $data['items'] = $this->Ordering_model->getMonthlyManufacture($startdate,$enddate);
+            $this->load->view('templates/header');
+            $this->load->view('templates/admin/navbar',$data);
+            $this->load->view('templates/admin/sidebar');
+            $this->load->view('pages/admin/'.$page,$data);    
+            $this->load->view('templates/admin/modal');        
+            $this->load->view('templates/admin/footer');
+        }
         //======================Admin Module===============================
     }
 ?>

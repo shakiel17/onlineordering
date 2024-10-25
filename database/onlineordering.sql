@@ -57,7 +57,7 @@ CREATE TABLE `cart` (
   `attachment` longblob DEFAULT NULL,
   `amount` double DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 /*Table structure for table `customer` */
 
@@ -75,6 +75,25 @@ CREATE TABLE `customer` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
+/*Table structure for table `disposal` */
+
+DROP TABLE IF EXISTS `disposal`;
+
+CREATE TABLE `disposal` (
+  `id` int(45) NOT NULL AUTO_INCREMENT,
+  `refno` varchar(100) DEFAULT NULL,
+  `code` varchar(100) DEFAULT NULL,
+  `description` varchar(100) DEFAULT NULL,
+  `quantity` double DEFAULT NULL,
+  `unitcost` varchar(100) DEFAULT NULL,
+  `datearray` date DEFAULT NULL,
+  `timearray` time DEFAULT NULL,
+  `disposal_date` date DEFAULT NULL,
+  `disposal_time` time DEFAULT NULL,
+  `status` varchar(100) DEFAULT 'pending',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
 /*Table structure for table `sales` */
 
 DROP TABLE IF EXISTS `sales`;
@@ -88,7 +107,7 @@ CREATE TABLE `sales` (
   `timearray` time DEFAULT NULL,
   `remarks` varchar(100) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 /*Table structure for table `stocks` */
 
@@ -124,7 +143,7 @@ CREATE TABLE `stocktable` (
   `datearray` date DEFAULT NULL,
   `timearray` time DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=22 DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=30 DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
 /*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;

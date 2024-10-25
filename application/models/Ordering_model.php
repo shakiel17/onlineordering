@@ -436,15 +436,20 @@
             $unitcost=$res['unitcost'];
             $date=date('Y-m-d');
             $time=date('H:i:s');
+            $qty1=$this->Ordering_model->getQuantity($code);
             $check=$this->db->query("SELECT * FROM disposal WHERE refno='$refno' AND code='$code' AND `status`='pending'");
             if($check->num_rows()>0){
                 $row=$check->row_array();
                 $qty=$row['quantity'];
-                $tqty=$qty+$quantity;
+                $tqty=$qty+$quantity;                
                 $id=$row['id'];
-                $result=$this->db->query("UPDATE disposal SET quantity='$tqty' WHERE id='$id'");
+                if($qty1['quantity'] >= $tqty){
+                    $result=$this->db->query("UPDATE disposal SET quantity='$tqty' WHERE id='$id'");
+                }
             }else{
-                $result=$this->db->query("INSERT INTO disposal(refno,code,`description`,quantity,unitcost,datearray,timearray) VALUES('$refno','$code','$description','$quantity','$unitcost','$date','$time')");
+                if($qty1['quantity'] >= $quantity){
+                    $result=$this->db->query("INSERT INTO disposal(refno,code,`description`,quantity,unitcost,datearray,timearray) VALUES('$refno','$code','$description','$quantity','$unitcost','$date','$time')");
+                }
             }
             if($result){
                 return true;
@@ -452,6 +457,38 @@
                 return false;
             }
             
+        }
+        public function remove_from_disposal($id){
+            $result=$this->db->query("DELETE FROM disposal WHERE id='$id'");
+            if($result){
+                return true;
+            }else{
+                return false;
+            }
+        }
+        public function post_disposal(){
+            $refno=$this->input->post('refno');
+            $date=date('Y-m-d');
+            $time=date('H:i:s');
+            $query=$this->db->query("SELECT * FROM disposal WHERE refno='$refno' AND `status`='pending'");
+            $result=$query->result_array();
+            foreach($result as $item){
+                $result=$this->db->query("INSERT INTO stocktable(code,unitcost,quantity,trantype,datearray,timearray) VALUES('$item[code]','$item[unitcost]','-$item[quantity]','dispose','$date','$time')");
+            }
+            if($result){
+                $this->db->query("UPDATE disposal SET `status`='dispose',disposal_date='$date',disposal_time='$time' WHERE refno='$refno'");
+                return true;
+            }else{
+                return false;
+            }
+        }
+        public function getMonthlyDisposal($startdate,$enddate){
+            $result=$this->db->query("SELECT * FROM disposal WHERE disposal_date BETWEEN '$startdate' AND '$enddate' AND `status`='dispose' ORDER BY disposal_date ASC,disposal_time ASC");
+            return $result->result_array();
+        }
+        public function getMonthlyManufacture($startdate,$enddate){
+            $result=$this->db->query("SELECT s.description,st.quantity,s.unitcost,st.datearray FROM stocktable st INNER JOIN stocks s ON s.code=st.code WHERE st.datearray BETWEEN '$startdate' AND '$enddate' AND st.trantype='adjustment' ORDER BY st.datearray ASC,st.timearray ASC");
+            return $result->result_array();
         }
     }
 ?>

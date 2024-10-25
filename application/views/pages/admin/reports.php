@@ -160,6 +160,104 @@
                 <?=form_close();?>
               </div>              
             </div>
+
+            <div class="col-md-4">
+              <div class="card">
+                <?=form_open(base_url()."monthly_disposal",array("class" => "form-horizontal"));?>                
+                  <div class="card-body">
+                    <h4 class="card-title">Monthly Disposal</h4>
+                    <div class="form-group row">
+                      <label
+                        for="fname"
+                        class="col-sm-3 text-end control-label col-form-label"
+                        >Start Date</label
+                      >
+                      <div class="col-sm-9">
+                        <input
+                          type="date"
+                          class="form-control"
+                          id="fname"
+                          placeholder="First Name Here"
+                          name="startdate"
+                        />
+                      </div>
+                    </div> 
+                    <div class="form-group row">
+                      <label
+                        for="fname"
+                        class="col-sm-3 text-end control-label col-form-label"
+                        >End Date</label
+                      >
+                      <div class="col-sm-9">
+                        <input
+                          type="date"
+                          class="form-control"
+                          id="fname"
+                          placeholder="First Name Here"
+                          name="enddate"
+                        />
+                      </div>
+                    </div>                  
+                  </div>
+                  <div class="border-top">
+                    <div class="card-body">
+                      <button type="submit" class="btn btn-primary">
+                        Generate
+                      </button>
+                    </div>
+                  </div>
+                <?=form_close();?>
+              </div>              
+            </div>
+
+            <div class="col-md-4">
+              <div class="card">
+                <?=form_open(base_url()."monthly_manufacture",array("class" => "form-horizontal"));?>                
+                  <div class="card-body">
+                    <h4 class="card-title">Monthly Manufacture Cost</h4>
+                    <div class="form-group row">
+                      <label
+                        for="fname"
+                        class="col-sm-3 text-end control-label col-form-label"
+                        >Start Date</label
+                      >
+                      <div class="col-sm-9">
+                        <input
+                          type="date"
+                          class="form-control"
+                          id="fname"
+                          placeholder="First Name Here"
+                          name="startdate"
+                        />
+                      </div>
+                    </div> 
+                    <div class="form-group row">
+                      <label
+                        for="fname"
+                        class="col-sm-3 text-end control-label col-form-label"
+                        >End Date</label
+                      >
+                      <div class="col-sm-9">
+                        <input
+                          type="date"
+                          class="form-control"
+                          id="fname"
+                          placeholder="First Name Here"
+                          name="enddate"
+                        />
+                      </div>
+                    </div>                  
+                  </div>
+                  <div class="border-top">
+                    <div class="card-body">
+                      <button type="submit" class="btn btn-primary">
+                        Generate
+                      </button>
+                    </div>
+                  </div>
+                <?=form_close();?>
+              </div>              
+            </div>
           </div>
           <!-- editor -->
         

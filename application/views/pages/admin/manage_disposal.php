@@ -67,7 +67,7 @@
                                                     echo "<td align='right'>".date('h:i A',strtotime($item['timearray']))."</td>";                                                                                                        
                                                     ?>
                                                     <td>
-                                                        <a href="#" class="btn btn-warning btn-sm">Manage</a>                                                        
+                                                        <a href="<?=base_url();?>edit_disposal/<?=$item['refno'];?>" class="btn btn-warning btn-sm">Manage</a>                                                        
                                                     </td>
                                                     <?php
                                                 echo "</tr>";
