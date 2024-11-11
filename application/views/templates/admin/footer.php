@@ -48,6 +48,7 @@
     <script src="<?=base_url();?>design/assets/libs/flot.tooltip/js/jquery.flot.tooltip.min.js"></script>
     <script src="<?=base_url();?>design/assets/libs/chart/turning-series.js"></script>
     <script src="<?=base_url();?>design/dist/js/pages/chart/chart-page-init.js"></script>
+    <script src="<?=base_url();?>design/assets/libs/toastr/build/toastr.min.js"></script>
     <script>       
         $('#zero_config').DataTable();
         $('#full_level').DataTable();

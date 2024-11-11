@@ -13,10 +13,10 @@
                                     <li class="breadcrumb-item active" aria-current="page">Library</li>
                                 </ol>
                             </nav> -->
-                        </div>
+                        </div>                        
                     </div>
                 </div>
-            </div>
+            </div>                        
             <!-- ============================================================== -->
             <!-- End Bread crumb and right sidebar toggle -->
             <!-- ============================================================== -->
@@ -27,6 +27,13 @@
                 <!-- ============================================================== -->
                 <!-- Start Page Content -->
                 <!-- ============================================================== -->
+                 <?php
+                 if($this->session->error){
+                 ?>
+                <div class="alert alert-danger"><?=$this->session->error;?></div>
+                <?php
+                 }
+                 ?>
                 <div class="row">                    
                     <!-- Column -->
                     <div class="col-md-6 col-lg-4">
@@ -172,7 +179,8 @@
                                 </thead>
                                 <tbody>
                                 <?php
-                                    $query=$this->Ordering_model->getLevel();
+                                    $crit=0;
+                                    $query=$this->Ordering_model->getLevel();                                    
                                     foreach($query as $item){
                                         $max=$item['max_level'];
                                         $min=$item['critical_level'];
@@ -187,7 +195,11 @@
                                             <td align="center"><?=$item['soh'];?></td>                                    
                                         </tr>                            
                                         <?php
+                                        $crit++;
                                         }
+                                    }
+                                    if($crit > 0){
+                                        $this->session->set_flashdata('error',"You have $crit items in critical level!");
                                     }
                                     ?>                        
                                 </tbody>
