@@ -149,8 +149,13 @@
             redirect(base_url()."manage_cart");
         }
         public function checkout(){
-            $refno="RN".date('YmdHis');
-            $checkout=$this->Ordering_model->checkout($refno);
+            $totalamount=$this->input->post('totalamount');
+            $amount=$this->input->post('amount');
+            $dp=$totalamount/2;
+            if($amount>=$dp){
+                $refno="RN".date('YmdHis');
+                $checkout=$this->Ordering_model->checkout($refno);
+            }
             if($checkout){
                 echo "<script>alert('Order successfully checked out!');window.location='".base_url()."view_invoice/$refno';</script>";
             }else{
