@@ -132,6 +132,8 @@
                       <td>Attachment:</td>
                       <td><input type="file" name="file" class="form-control" required></td>
                     </tr>
+                      <td colspan="2"><b style="color:red;">DP must be 50% or above.</b></td>
+                    </tr>
                     <tr>
                       <td><input type="submit" class="btn btn-primary btn-lg" value="Checkout" <?=$view;?>></td>
                       <td></td>
